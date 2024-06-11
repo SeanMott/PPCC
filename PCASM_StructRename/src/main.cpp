@@ -82,9 +82,35 @@ static inline void ASMCodeRename_FileArray(const uint32 threadIndex,
 
 int main(int args, char* argv[])
 {
-	std::string ASMDir = "C:\\KARTools\\KAR-Decomp\\asm";
-	//std::string ASMTestOutputDir = "C:\\KARTools\\KAR-Decomp\\PPC_ASMOutput";
-	std::string DTKSymbolFilepath = "C:\\KARTools\\KAR-Decomp\\config\\GKYE1\\symbols.txt";
+	std::string ASMDir = "";
+	std::string DTKSymbolFilepath = "";
+
+	//if there are flags
+	if (args > 1)
+	{
+		for (uint32 i = 1; i < args; ++i)
+		{
+			//checks for the -asm flag
+			if (!strcmp(argv[i], "-asm") && i + 1 < args)
+			{
+				ASMDir = argv[i + 1];
+			}
+
+			//checks for the -symbolFile flag
+			if (!strcmp(argv[i], "-symbolFile") && i + 1 < args)
+			{
+				DTKSymbolFilepath = argv[i + 1];
+			}
+		}
+	}
+
+	//if there are no flags
+	else //purly a debug thing, in a offical build this should just throw a error or auto search
+	{
+		std::string ASMDir = "C:\\KARTools\\KAR-Decomp\\asm";
+		//std::string ASMTestOutputDir = "C:\\KARTools\\KAR-Decomp\\PPC_ASMOutput";
+		std::string DTKSymbolFilepath = "C:\\KARTools\\KAR-Decomp\\config\\GKYE1\\symbols.txt";
+	}
 
 	printf("---------------GENERATING SYMBOL STRUCT DEFINITIONS------------\n");
 
