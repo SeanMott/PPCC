@@ -83,7 +83,7 @@ static inline void ASMCodeRename_FileArray(const uint32 threadIndex,
 int main(int args, char* argv[])
 {
 	std::string ASMDir = "C:\\KARTools\\KAR-Decomp\\asm";
-	std::string ASMTestOutputDir = "C:\\KARTools\\KAR-Decomp\\PPC_ASMOutput";
+	//std::string ASMTestOutputDir = "C:\\KARTools\\KAR-Decomp\\PPC_ASMOutput";
 	std::string DTKSymbolFilepath = "C:\\KARTools\\KAR-Decomp\\config\\GKYE1\\symbols.txt";
 
 	printf("---------------GENERATING SYMBOL STRUCT DEFINITIONS------------\n");
