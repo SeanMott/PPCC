@@ -54,20 +54,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\bin\Debug-windows-x86_64-PCASMToCpp\PowerPCOperandDecoder\</OutDir>
-    <IntDir>..\bin-obj\Debug-windows-x86_64-PCASMToCpp\PowerPCOperandDecoder\</IntDir>
+    <OutDir>bin\Debug\</OutDir>
+    <IntDir>obj\Debug\</IntDir>
     <TargetName>PowerPCOperandDecoder</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\bin\Release-windows-x86_64-PCASMToCpp\PowerPCOperandDecoder\</OutDir>
-    <IntDir>..\bin-obj\Release-windows-x86_64-PCASMToCpp\PowerPCOperandDecoder\</IntDir>
+    <OutDir>bin\Release\</OutDir>
+    <IntDir>obj\Release\</IntDir>
     <TargetName>PowerPCOperandDecoder</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <OutDir>..\bin\Dist-windows-x86_64-PCASMToCpp\PowerPCOperandDecoder\</OutDir>
-    <IntDir>..\bin-obj\Dist-windows-x86_64-PCASMToCpp\PowerPCOperandDecoder\</IntDir>
+    <OutDir>bin\Dist\</OutDir>
+    <IntDir>obj\Dist\</IntDir>
     <TargetName>PowerPCOperandDecoder</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>

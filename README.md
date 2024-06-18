@@ -81,6 +81,10 @@ PPCC depends on the [Bytes The Dust Standard Library](). This is a library of C+
 
 ### Windows
 
+In the `PythonScripts` folder run `PPCCProjectSetup.py`, the installer will walk you through getting BTDSTD if needed and update the Premake script to work on your system.
+
+Afterwards run `GenProjects.bat` and then just open and build the visual studio project.
+
 ### Mac
 
 ### Linux
