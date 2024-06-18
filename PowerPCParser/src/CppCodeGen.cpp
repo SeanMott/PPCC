@@ -1512,16 +1512,16 @@ static inline void CodeGen_ProcessObjectASTNode(std::vector<PPC::Backend::CppCod
 		switch (secondASTNode.objMetaData.variables[i].tokens[0].datatypeMetadata.datatype)
 		{
 		case PPC::Util::Datatype::Skip_Uint16:
-			node.generalStrData = "uint16";
+			node.generalStrData = "uint16_t";
 			break;
 		case PPC::Util::Datatype::Byte:
-			node.generalStrData = "uint8";
+			node.generalStrData = "uint8_t";
 			break;
 		case PPC::Util::Datatype::Byte_4:
 
 			//if it's a hex value
 			if (secondASTNode.objMetaData.variables[i].tokens[1].type == PPC::Token::TokenType::Literal_HexValue)
-				node.generalStrData = "uint32";
+				node.generalStrData = "uint32_t";
 			//if it's a function pointer
 			else
 				node.generalStrData = "void*";
@@ -1551,7 +1551,7 @@ static inline void CodeGen_ProcessObjectASTNode(std::vector<PPC::Backend::CppCod
 	}
 
 	//adds }
-	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Operator_Curly_Bracket_Closed;
+	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::ObjectEnd;
 	node.generalStrData = "}";
 	codeGenTree->emplace_back(node);
 }

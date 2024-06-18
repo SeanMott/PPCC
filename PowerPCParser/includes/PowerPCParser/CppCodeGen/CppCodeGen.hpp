@@ -26,7 +26,9 @@ namespace PPC::Backend::CppCodeGen
 		//para operator (open)
 		//para operator (closed)
 
-		ObjectPrototype, //C++ struct
+		ObjectPrototype, //starts the C++ struct
+
+		ObjectEnd, //ends the C++ struct
 
 		//NoCodeForASMInstruction, //asm instruction comment injection
 
@@ -122,6 +124,11 @@ namespace PPC::Backend::CppCodeGen
 				//object prototype
 			case CodeGenNodeType::ObjectPrototype:
 				str = "struct " + objectMetadata.objName;
+				break;
+
+				//object ende
+			case CodeGenNodeType::ObjectEnd:
+				str = "};\n";
 				break;
 
 				//comment

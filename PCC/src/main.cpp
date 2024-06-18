@@ -48,17 +48,6 @@ int main(int args, char* argv[])
 {
 	//--init
 
-	//gets symbol file
-	//std::string filepath = "C:\\KARTools\\KAR-Decomp\\asm\\symbols.txt";
-	//
-	////reads file
-	BTD::IO::File file; //file.Open(filepath.c_str(), BTD::IO::FileOP::TextRead_OpenExisting);
-	//std::string symbolText = ""; file.ReadAllText(symbolText);
-	//file.Close();
-
-	//lexes
-	//PPC::Parser::LexSymbolFile(symbolText);
-
 	std::string ASMDir = "C:\\Decomps\\TowerOfDruaga\\asm";
 	std::string COutputDir = "C:\\Decomps\\TowerOfDruaga\\PPC_COutput";
 
@@ -96,20 +85,6 @@ int main(int args, char* argv[])
 		//runs all stages of the ASM to C++ pipeline
 		ConvertASMToCpp(filepath, filename, COutputDir);
 	}
-
-	//manually set the file path
-	//std::string filename = "auto_12_805E62E0_sbss2";
-	//std::string filename = "auto_11_805DE700_sdata2";
-	//std::string filename = "__init_cpp_exceptions";
-	//std::string filename = "auto___destroy_global_chain_text";
-	//std::string filename = "auto_00_80003100_init";
-	//std::string filename = "auto_03_803AF810_text";
-	//std::string filename = "auto_03_803AF810_text";
-	//std::string filepath = ASMDir + "\\" + filename + ".s";
-	
-	//runs all stages of the ASM to C++ pipeline
-	//std::string filepath = ASMDir + "//" + filename + ".s";
-	//ConvertASMToCpp(filepath, filename, COutputDir);
 
 	getchar(); //holds console
 	return 0;
