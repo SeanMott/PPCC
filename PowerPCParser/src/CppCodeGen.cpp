@@ -16,404 +16,6 @@ static inline PPC::Backend::CppCodeGen::CodeGenNode CodeGen_ProcessASMInstructio
 	return node;
 }
 
-////processes a jump instruction
-//static inline bool CodeGen_ProcessASMInstruction_Jump(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
-//	const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
-//{
-//	PPC::Backend::CppCodeGen::CodeGenNode node; bool nodeExists = false;
-//
-//	switch (ASMInstruction->opcode.instruction)
-//	{
-//		//blr
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_blr:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//		node.generalStrData = "\treturn;"; //return control flow
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//b
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_b:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::B_If(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //goto the label address
-//		node.generalStrData += "//" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData + "\n"; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//bl
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_bl:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::BL_If(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //goto the label address
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData + "\n"; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//beq
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_beq:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::BEQ_If(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //if equal to branch
-//		node.generalStrData += "//" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData + "\n"; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//bne
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_bne:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::BNE_If(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //if NOT equal to branch
-//		node.generalStrData += "//" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData + "\n"; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//bctrl
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_bctrl:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::BCTR(ctx);"; //if NOT equal to branch
-//		node.generalStrData += "//" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData + " branch to the Count Register\n"; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//	}
-//
-//	if (nodeExists)
-//		codeGenTree->emplace_back(node); //adds node
-//
-//	return nodeExists;
-//}
-
-////processes a store instruction
-//static inline bool CodeGen_ProcessASMInstruction_Store(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
-//	const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
-//{
-//	PPC::Backend::CppCodeGen::CodeGenNode node; bool nodeExists = false;
-//
-//	switch (ASMInstruction->opcode.instruction)
-//	{
-//		//stwu
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_stwu:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::STWU(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-//			", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//stw
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_stw:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::STW(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//stbu
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_stbu:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::STBU(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//	}
-//
-//	if (nodeExists)
-//		codeGenTree->emplace_back(node); //adds node
-//
-//	return nodeExists;
-//}
-
-////processes a load instruction
-//static inline bool CodeGen_ProcessASMInstruction_Load(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
-//	const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
-//{
-//	PPC::Backend::CppCodeGen::CodeGenNode node; bool nodeExists = false;
-//
-//	switch (ASMInstruction->opcode.instruction)
-//	{
-//		//lwz
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_lwz:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::LWZ(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//lbzu
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_lbzu:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::LBZU(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//li
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_li:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::LI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//lis
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_lis:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::LIS(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//	}
-//
-//	if (nodeExists)
-//		codeGenTree->emplace_back(node); //adds node
-//
-//	return nodeExists;
-//}
-
-////processes a move instruction
-//static inline bool CodeGen_ProcessASMInstruction_Move(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
-//	const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
-//{
-//	PPC::Backend::CppCodeGen::CodeGenNode node; bool nodeExists = false;
-//
-//	switch (ASMInstruction->opcode.instruction)
-//	{
-//		//mflr
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_mflr:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\t" + ASMInstruction->parameterTokens[0].data + " = ctx->LinkRegister;"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//mtlr
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_mtlr:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tctx->LinkRegister = " + ASMInstruction->parameterTokens[0].data + ";"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//mr
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_mr:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::MR(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//mtctr
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_mtctr:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tctx->CountRegister = " + ASMInstruction->parameterTokens[0].data + ";"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//	}
-//
-//	if (nodeExists)
-//		codeGenTree->emplace_back(node); //adds node
-//
-//	return nodeExists;
-//}
-
-////processes a math instruction
-//static inline bool CodeGen_ProcessASMInstruction_Math(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
-//	const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
-//{
-//	PPC::Backend::CppCodeGen::CodeGenNode node; bool nodeExists = false;
-//
-//	switch (ASMInstruction->opcode.instruction)
-//	{
-//		//add
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_add:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::ADD(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//addi
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_addi:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::ADDI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//subi
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_subi:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::SUBI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//subf
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_subf:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::SUBF(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//subic
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_subic:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::SUBIC(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//	}
-//
-//	if (nodeExists)
-//		codeGenTree->emplace_back(node); //adds node
-//
-//	return nodeExists;
-//}
-
-////processes a compare instruction
-//static inline bool CodeGen_ProcessASMInstruction_Compare(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
-//	const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
-//{
-//	PPC::Backend::CppCodeGen::CodeGenNode node; bool nodeExists = false;
-//
-//	switch (ASMInstruction->opcode.instruction)
-//	{
-//		//cmpwi
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_cmpwi:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::CMPWI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//cmplwi
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_cmplwi:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::CMPLWI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//cmplw
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_cmplw:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::CMPLW(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//	}
-//
-//	if (nodeExists)
-//		codeGenTree->emplace_back(node); //adds node
-//
-//	return nodeExists;
-//}
-
-////process a bitshift instruction
-//static inline bool CodeGen_ProcessASMInstruction_Bitshift(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
-//	const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
-//{
-//	PPC::Backend::CppCodeGen::CodeGenNode node; bool nodeExists = false;
-//
-//	switch (ASMInstruction->opcode.instruction)
-//	{
-//		//clrlwi
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_clrlwi:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::CLRLWI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-//			", " + ASMInstruction->parameterTokens[2].data + "); "; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//or
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_or:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::OR(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-//			", " + ASMInstruction->parameterTokens[2].data + "); "; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//nor
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_nor:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::NOR(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
-//			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + "); "; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//slwi
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_slwi:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::SLWI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-//			", " + ASMInstruction->parameterTokens[2].data + "); "; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//srwi
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_srwi:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::SRWI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-//			", " + ASMInstruction->parameterTokens[2].data + "); "; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//
-//		//ori
-//	case PPC::PPC::Decoder::ASM::case PPC::Decoder::ASM::EInstruction::eInstruction_ori:
-//		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
-//
-//		node.generalStrData = "\tPPC::StaticRecompile::ASM::ORI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-//			", " + ASMInstruction->parameterTokens[2].data + "); "; //sets data
-//		node.generalStrData += " //" + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //generates comment
-//		nodeExists = true;
-//		break;
-//	}
-//
-//	if (nodeExists)
-//		codeGenTree->emplace_back(node); //adds node
-//
-//	return nodeExists;
-//}
-
 //processes a assembly instruction into a series of nodes
 static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
 	uint32& ASMInstructionIndex,
@@ -430,46 +32,148 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 
 		// move register (with move to/from special registers)
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mr:
-		codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
 		break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfspr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsprg:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr0:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr1:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfspr:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::MFSPR(ctx.GPR.GPR, ctx.SPR.SPR, " + ASMInstruction->parameterTokens[0].data + ", ctx.SPR.SPR);"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsprg:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr0:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr1:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtspr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr0:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr1:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsprg:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsrg:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsr:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr0:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr1:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsprg:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsrg:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsr:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtdar:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtdsisr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsrd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsree:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtxer:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfcr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtcrf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfocrf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfcr:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::MFCR(ctx.GRP.GRP, ctx.CR" + ASMInstruction->parameterTokens[0].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtcrf:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfocrf:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtocrf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mcrf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mftb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mflr:
-		codeGenNode.generalStrData = "\tctx.GPR.GPR[" + ASMInstruction->parameterTokens[0].data + "] = ctx.SPR.LR;"; //instruction to C++
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 	
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtctr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfdar:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtctr:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfdar:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 		// load memory
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lbz:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lbz:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LBZ(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lhz:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LHZ(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
 			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
@@ -477,10 +181,18 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LWZ(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
 			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzu:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LBZU(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lba:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -491,13 +203,32 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lwau:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_ld:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_ldu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lmw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lmw:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 		// load memory indexed
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzx:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LBZX(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzux:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LBZUX(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lbax:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -510,30 +241,79 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_ldux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	
 		// store memory
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sth:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stb:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STB(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sth:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STH(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + "); "; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stw:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STW(ctx.GPR.GPR, ctx.GPR.GPR[" + ASMInstruction->parameterTokens[0].data + "], " +
 			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ", ctx.memory); "; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_std:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_slwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stbu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sthu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stwu:
-		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STWU(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " +
+	case PPC::Decoder::ASM::EInstruction::eInstruction_std:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_slwi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stbu:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STBU(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
 			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + "); "; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sthu:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STHU(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + "); "; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stwu:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STWU(ctx, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + "); "; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stdu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 
 	// store memory indexed
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stbx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stbx:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STBX(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + "); "; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_sthx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stwx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stdx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -552,16 +332,41 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_twui:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 
 		// branch instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_b:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bdnz:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ba:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bl:
-		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::BL_If(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //C++ code
+	case PPC::Decoder::ASM::EInstruction::eInstruction_b:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::B(&ctx.PC, " + ASMInstruction->parameterTokens[0].data + ");"; //C++ code
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_blt:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bdnz:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ba:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::BA(ctx.PC, " + ASMInstruction->parameterTokens[0].data + ");"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bl:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::BL_If(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_blt:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bla:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bcl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -571,16 +376,41 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bclrl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bcctr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bcctrl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_beq:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_beq_plus:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_beqlr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_blr:
-		codeGenNode.generalStrData = "\treturn;"; //C++ code
+	case PPC::Decoder::ASM::EInstruction::eInstruction_beq:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bltlr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_beq_plus:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_beqlr:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_blr:
+		codeGenNode.generalStrData = "\treturn;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bltlr:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bne:
 		codeGenNode.generalStrData = "\tif(PPC::StaticRecompile::ASM::BNE_If(ctx))"; //if check
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM	
@@ -591,10 +421,34 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bnelr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bge:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bgelr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bgt:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bnelr:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bge:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bgelr:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bgt:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bctr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bctrl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 
@@ -605,11 +459,40 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stdcx_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break; //.
 
 		// memory bariers
-	case PPC::Decoder::ASM::EInstruction::eInstruction_isync:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sync:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwsync:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ptesync:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_eieio:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_isync:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ISYNC();"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sync:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::SYNC();"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwsync:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LWSYNC();"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ptesync:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_eieio:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::EIEIO();"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 		// custom
 	//case PPC::Decoder::ASM::EInstruction::eInstruction_cmp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;
@@ -638,22 +521,39 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_li:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lis:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LIS(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
 		// math with immediate value
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addic:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addic_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addic:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADDIC(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addic_Dot:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADDIC_DOT(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + "ctx.CR);"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_addi:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADDI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
 			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
@@ -662,15 +562,58 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mulli:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 
 		// add XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_add:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_add_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_add:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADD(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_add_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addo:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addo_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 		// subtract grom XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subic:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subic:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subf:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::SUBF(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_subf_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_subfo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_subfo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -786,50 +729,213 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpwi:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::CMPWI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpdi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cmplwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cmplwi:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::CMPLWI(ctx.GPR.GPR, &ctx.CR.CR, 0, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpldi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cmplw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cmplw:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::CMPLW(ctx.GPR.GPR, &ctx.CR.CR, 0, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpld:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 
 	// logical instructions with immediate values
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andis:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andis:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_andi_Dot:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ANDI_DOT(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
 			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andis_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ori:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_oris:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_xori:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_xoris:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andis_Dot:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ANDIS_DOT(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ", ctx.CR);"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ori:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ORI(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_oris:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ORIS(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_xori:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::XORI(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_xoris:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::XORIS(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 		// logical instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_and:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_and_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_or:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_or_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_xor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_xor_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nand:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nand_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nor_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_eqv:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_eqv_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andc_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_orc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_orc_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_and:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::AND(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_and_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_or:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::OR(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_or_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_xor:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::XOR(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_xor_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nand:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::NAND(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nand_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nor:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::NOR(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nor_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_eqv:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::EQV(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_eqv_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andc:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ANDC(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andc_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_orc:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ORC(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
+			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_orc_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 	
 	// byte extend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_extsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -855,11 +961,40 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicr_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_rldic:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_rldic_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_clrrwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlslwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi_Dot:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlwi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_clrrwi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlslwi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 		// REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM
 	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwinm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -880,7 +1015,14 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		// Extended shifts
 	case PPC::Decoder::ASM::EInstruction::eInstruction_sld:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_sld_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_slw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_slw:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::SLW(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_slw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_srd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_srd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -899,9 +1041,27 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_sradi_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 
 		// Cache operation instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbst:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbi:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::DCBI(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbf:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::DCBF(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbst:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::DCBST(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbt:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbtst:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbz:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -930,7 +1090,12 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stfiwx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 
 		//store move register
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stmw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stmw:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 		// Floating point move and single op instructions
 	case PPC::Decoder::ASM::EInstruction::eInstruction_fmr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -1018,6 +1183,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtlr:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::MTLR(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
@@ -1133,7 +1299,13 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vdot4fp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vmulfp128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vnmsubfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vnor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vnor:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+		
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;			//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vperm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vpermwi128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
@@ -1148,7 +1320,13 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuwum:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuwus:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vrefp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rfi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rfi:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::RFI(ctx.PC, ctx.MSR.MSR, ctx.SRR.SRR0, ctx.SRR.SRR1);"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfim:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfin:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfip:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
@@ -1200,13 +1378,43 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 	case PPC::Decoder::ASM::EInstruction::eInstruction_vxor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
 
 		//extra
-	case PPC::Decoder::ASM::EInstruction::eInstruction_icbi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rotlwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rotrwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_icbi:
+		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ICBI(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
+			ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rotlwi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rotrwi:
+		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
 
 	//catch all
-	case PPC::Decoder::ASM::EInstruction::eInstruction_MAX:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-		default:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_MAX:
+		codeGenNode.generalStrData = "\t//THIS SHOULD NEVER BE SEEN, A INSTRUCTION IS SOME HOW OUTSIDE THE NORMAL ENUM VALUE!!! INVESTIGATE"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
+	default:
+		codeGenNode.generalStrData = "\t//THIS SHOULD NEVER BE SEEN, A INSTRUCTION IS SOME HOW OUTSIDE THE NORMAL ENUM VALUE!!! INVESTIGATE"; //instruction to C++
+		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
+		codeGenNode.generalStrData += "\n"; //adds extra space
+		codeGenTree->emplace_back(codeGenNode);
+		break;
+
 	}
 
 	//Code Gen

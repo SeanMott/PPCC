@@ -134,7 +134,7 @@ namespace PPC::Backend::CppCodeGen
 				break;
 
 			case CodeGenNodeType::Operator_Curly_Bracket_Closed:
-				str = "}";
+				str = "}\n";
 				break;
 
 
