@@ -46,7 +46,9 @@ def NoBTDSTD():
     inquirer.list_input("When the installer finishes just run this script again, and go to the Build From Source option.",
     choices=isBTDInstalled_options)
 
-    os.system("python BTDSTDInstall.py")
+    #gets directory and run BTDSTD installer
+    d = os.path.dirname(os.path.realpath(__file__))
+    os.system("python " + d + "/BTDSTDInstall.py")
 
 #if the user wishes to build PPCC from source
 def OptionMode_BuildFromSource():
