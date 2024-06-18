@@ -42,10 +42,12 @@
     <ClInclude Include="includes\PowerPCParser\Lexing\Lexer.hpp">
       <Filter>includes\PowerPCParser\Lexing</Filter>
     </ClInclude>
+    <ClInclude Include="includes\PowerPCParser\Lexing\StructGeneration.hpp">
+      <Filter>includes\PowerPCParser\Lexing</Filter>
+    </ClInclude>
     <ClInclude Include="includes\PowerPCParser\Lexing\Tokens.hpp">
       <Filter>includes\PowerPCParser\Lexing</Filter>
     </ClInclude>
-    <ClInclude Include="includes\PowerPCParser\Lexing\StructGeneration.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CppCodeGen.cpp">

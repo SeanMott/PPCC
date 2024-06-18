@@ -38,7 +38,7 @@ static inline void ConvertASMToCpp(const std::string& filepath, const std::strin
 	//PrintAndDump_SecondPassASMAST(secondPassASTTree, dumpFileDir, filename);
 
 	//Step 4: First Pass of the C++ code gen
-	std::vector<PPC::Backend::CppCodeGen::CodeGenNode> firstPassCppCodeGen = PPC::Backend::CppCodeGen::RunCodeGen(secondPassASTTree);
+	std::vector<PPC::Backend::CppCodeGen::CodeGenNode> firstPassCppCodeGen = PPC::Backend::CppCodeGen::RunCodeGen(secondPassASTTree, filename);
 	secondPassASTTree.clear();
 	PPC::Backend::CppCodeGen::PrintAndDump_CppCodeGen(firstPassCppCodeGen, dumpFileDir, filename);
 }
@@ -59,8 +59,27 @@ int main(int args, char* argv[])
 	//lexes
 	//PPC::Parser::LexSymbolFile(symbolText);
 
-	std::string ASMDir = "C:\\KARTools\\KAR-Decomp\\asm";
-	std::string COutputDir = "C:\\KARTools\\KAR-Decomp\\PPC_COutput";
+	std::string ASMDir = "C:\\Decomps\\TowerOfDruaga\\asm";
+	std::string COutputDir = "C:\\Decomps\\TowerOfDruaga\\PPC_COutput";
+
+	//if there are flags
+	if (args > 1)
+	{
+		for (uint32 i = 1; i < args; ++i)
+		{
+			//checks for the -asm flag
+			if (!strcmp(argv[i], "-asm") && i + 1 < args)
+			{
+				ASMDir = argv[i + 1];
+			}
+
+			//checks for the -symbolFile flag
+			if (!strcmp(argv[i], "-cout") && i + 1 < args)
+			{
+				COutputDir = argv[i + 1];
+			}
+		}
+	}
 
 	//goes through each file and generate the C++
 	std::string path = ASMDir;

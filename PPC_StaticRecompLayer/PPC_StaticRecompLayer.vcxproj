@@ -138,7 +138,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Source.cpp" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\GameCubeRegisters.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\Macros.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_ARITHMETIC.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_BRANCH.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_COMPARASON.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_CONDITION.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_FLOATING.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_LOAD_STORE.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_LOGICAL.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_MISC.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_SHIFT_ROTATE.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_SPECIAL.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_SYNC.h" />
+    <ClInclude Include="includes\PPCStaticRecompilerLayer\PPC\StaticRecompile\PPC_SYSTEM_CALLS.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PPC_ARITHMETIC.cpp" />
+    <ClCompile Include="src\PPC_BRANCH.cpp" />
+    <ClCompile Include="src\PPC_COMPARASON.cpp" />
+    <ClCompile Include="src\PPC_CONDITION.cpp" />
+    <ClCompile Include="src\PPC_FLOATING.cpp" />
+    <ClCompile Include="src\PPC_LOAD_STORE.cpp" />
+    <ClCompile Include="src\PPC_LOGICAL.cpp" />
+    <ClCompile Include="src\PPC_MISC.cpp" />
+    <ClCompile Include="src\PPC_SHIFT_ROTATE.cpp" />
+    <ClCompile Include="src\PPC_SPECIAL.cpp" />
+    <ClCompile Include="src\PPC_SYNC.cpp" />
+    <ClCompile Include="src\PPC_SYSTEM_CALLS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PowerPCOperandDecoder\PowerPCOperandDecoder.vcxproj">

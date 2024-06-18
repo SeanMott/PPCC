@@ -11,6 +11,8 @@ namespace PPC::Backend::CppCodeGen
 	{
 		Comment = 0, //comment
 
+		GenaricCodeLine, //defines a genaric line of code
+
 		FunctionPrototype, //the prototype of a function
 
 		Operator_SemiColon,	 //operator ;
@@ -114,7 +116,7 @@ namespace PPC::Backend::CppCodeGen
 
 				//jump label
 			case CodeGenNodeType::JumpLabel:
-				str = "\nJump Label: " + generalStrData;
+				str = "\n" + generalStrData + ": //Jump Label";
 				break;
 
 				//object prototype
@@ -135,6 +137,7 @@ namespace PPC::Backend::CppCodeGen
 				str = "}";
 				break;
 
+
 				//prints the general string data
 			default:
 				str = generalStrData;
@@ -148,7 +151,7 @@ namespace PPC::Backend::CppCodeGen
 	};
 
 	//generates code gen nodes from fine-grain AST
-	std::vector<CodeGenNode> RunCodeGen(const std::vector<PPC::AST::SecondPass::ASTSecondPass_Node>& secondPassASTTree);
+	std::vector<CodeGenNode> RunCodeGen(const std::vector<PPC::AST::SecondPass::ASTSecondPass_Node>& secondPassASTTree, const std::string& filename);
 
 	//prints the C++ code gen first pass and dumps the data to a file
 	static inline void PrintAndDump_CppCodeGen(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>& firstPassCppCodeGen, const std::string& dumpDir, const std::string& fileName)
@@ -159,10 +162,15 @@ namespace PPC::Backend::CppCodeGen
 		for (uint32 i = 0; i < firstPassCppCodeGen.size(); ++i)
 			dumpText += firstPassCppCodeGen[i].Print();
 
-		//dumps into file
+		//dumps into cpp file
 		std::string filepath = dumpDir + "\\CppCodeGenDump_" + fileName + ".cpp";
 		BTD::IO::File file; file.Open(filepath.c_str(), BTD::IO::FileOP::TextWrite_OpenCreateStart);
 		file.WriteText(dumpText);
+		file.Close();
+
+		//dumps into header file
+		filepath = dumpDir + "\\CppCodeGenDump_" + fileName + ".hpp";
+		file.Open(filepath.c_str(), BTD::IO::FileOP::TextWrite_OpenCreateStart);
 		file.Close();
 	}
 

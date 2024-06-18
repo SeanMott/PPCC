@@ -295,6 +295,20 @@ std::vector<PPC::Token::Token> PPC::Parser::LexASMIntoTokesn(const std::string& 
 			//if other more specilized
 			else
 			{
+				//if it has a . at the end, we skip the rest of the parsing || we do this mainly for the asm instructions with . at the end of them
+				if (tokenIndex == TOKEN_FLAG_INDEX_PERIOD)
+				{
+					//checks if the previous word has any data
+					if (currentLine.size() > 0)
+					{
+						//printf("Had a period at the end \"%s\"\n", currentLine.c_str());
+						currentLine += ".";
+						tokens.emplace_back(TokenCreate::ProcessTextIntoToken(currentLine));
+						currentLine = "";
+						continue;
+					}
+				}
+
 				//if there was previous data, tokenize it as either a identifier or keyword
 				if (!currentLine.empty())
 					tokens.emplace_back(TokenCreate::ProcessTextIntoToken(currentLine));

@@ -146,8 +146,8 @@ namespace PPC::Decoder::ASM
 		// lwarx/stwcx
 		eInstruction_lwarx,
 		eInstruction_ldarx,
-		eInstruction_stwcxRC, //.
-		eInstruction_stdcxRC, //.
+		eInstruction_stwcx_Dot, //.
+		eInstruction_stdcx_Dot, //.
 
 		// memory bariers
 		eInstruction_isync,
@@ -185,7 +185,7 @@ namespace PPC::Decoder::ASM
 
 		// math with immediate value
 		eInstruction_addic,
-		eInstruction_addicRC,
+		eInstruction_addic_Dot,
 		eInstruction_addi,
 		eInstruction_addis,
 		eInstruction_subfic,
@@ -193,124 +193,124 @@ namespace PPC::Decoder::ASM
 
 		// add XO-form
 		eInstruction_add,
-		eInstruction_addRC,
+		eInstruction_add_Dot,
 		eInstruction_addo,
-		eInstruction_addoRC,
+		eInstruction_addo_Dot,
 
 		// subtract grom XO-form
 		eInstruction_subi,
 		eInstruction_subic,
 		eInstruction_subf,
-		eInstruction_subfRC,
+		eInstruction_subf_Dot,
 		eInstruction_subfo,
-		eInstruction_subfoRC,
+		eInstruction_subfo_Dot,
 
 		// add carrying XO-form
 		eInstruction_addc,
-		eInstruction_addcRC,
+		eInstruction_addc_Dot,
 		eInstruction_addco,
-		eInstruction_addcoRC,
+		eInstruction_addco_Dot,
 
 		// subtract From carrying XO-form
 		eInstruction_subfc,
-		eInstruction_subfcRC,
+		eInstruction_subfc_Dot,
 		eInstruction_subfco,
-		eInstruction_subfcoRC,
+		eInstruction_subfco_Dot,
 
 		// add extended XO-form
 		eInstruction_adde,
-		eInstruction_addeRC,
+		eInstruction_adde_Dot,
 		eInstruction_addeo,
-		eInstruction_addeoRC,
+		eInstruction_addeo_Dot,
 
 		// subtract from extended XO-form
 		eInstruction_subfe,
-		eInstruction_subfeRC,
+		eInstruction_subfe_Dot,
 		eInstruction_subfeo,
-		eInstruction_subfeoRC,
+		eInstruction_subfeo_Dot,
 		eInstruction_subis,
 
 		// add to minus one extended XO-form
 		eInstruction_addme,
-		eInstruction_addmeRC,
+		eInstruction_addme_Dot,
 		eInstruction_addmeo,
-		eInstruction_addmeoRC,
+		eInstruction_addmeo_Dot,
 
 		// subtract from minus one extended XO-form
 		eInstruction_subfme,
-		eInstruction_subfmeRC,
+		eInstruction_subfme_Dot,
 		eInstruction_subfmeo,
-		eInstruction_subfmeoRC,
+		eInstruction_subfmeo_Dot,
 
 		// add to zero extended XO-form
 		eInstruction_addze,
-		eInstruction_addzeRC,
+		eInstruction_addze_Dot,
 		eInstruction_addzeo,
-		eInstruction_addzeoRC,
+		eInstruction_addzeo_Dot,
 
 		// subtract from zero extended XO-form
 		eInstruction_subfze,
-		eInstruction_subfzeRC,
+		eInstruction_subfze_Dot,
 		eInstruction_subfzeo,
-		eInstruction_subfzeoRC,
+		eInstruction_subfzeo_Dot,
 
 		// negate
 		eInstruction_neg,
-		eInstruction_negRC,
+		eInstruction_neg_Dot,
 		eInstruction_nego,
-		eInstruction_negoRC,
+		eInstruction_nego_Dot,
 
 		// multiply low doubleword XO-form
 		eInstruction_mulld,
-		eInstruction_mulldRC,
+		eInstruction_mulld_Dot,
 		eInstruction_mulldo,
-		eInstruction_mulldoRC,
+		eInstruction_mulldo_Dot,
 
 		// multiply low word XO-form
 		eInstruction_mullw,
-		eInstruction_mullwRC,
+		eInstruction_mullw_Dot,
 		eInstruction_mullwo,
-		eInstruction_mullwoRC,
+		eInstruction_mullwo_Dot,
 
 		// multiply high doubleword XO-form
 		eInstruction_mullhd,
-		eInstruction_mullhdRC,
+		eInstruction_mullhd_Dot,
 
 		// multiply High Word XO-form
 		eInstruction_mullhw,
-		eInstruction_mullhwRC,
+		eInstruction_mullhw_Dot,
 
 		// multiply high doubleword unsigned XO-form
 		eInstruction_mulhdu,
-		eInstruction_mulhduRC,
+		eInstruction_mulhdu_Dot,
 
 		// multiply High Word Unsigned XO-form
 		eInstruction_mulhwu,
-		eInstruction_mulhwuRC,
+		eInstruction_mulhwu_Dot,
 
 		// divide doubleword XO-form
 		eInstruction_divd,
-		eInstruction_divdRC,
+		eInstruction_divd_Dot,
 		eInstruction_divdo,
-		eInstruction_divdoRC,
+		eInstruction_divdo_Dot,
 
 		// divide word XO-form
 		eInstruction_divw,
-		eInstruction_divwRC,
+		eInstruction_divw_Dot,
 		eInstruction_divwo,
-		eInstruction_divwoRC,
+		eInstruction_divwo_Dot,
 
 		// divide doubleword unsigned XO-form
 		eInstruction_divdu,
-		eInstruction_divduRC,
+		eInstruction_divdu_Dot,
 		eInstruction_divduo,
-		eInstruction_divduoRC,
+		eInstruction_divduo_Dot,
 
 		// divide word unsigned XO-form
 		eInstruction_divwu,
-		eInstruction_divwuRC,
+		eInstruction_divwu_Dot,
 		eInstruction_divwuo,
-		eInstruction_divwuoRC,
+		eInstruction_divwuo_Dot,
 
 		// compare
 		InstructionGroup_Compare_Start,
@@ -327,8 +327,8 @@ namespace PPC::Decoder::ASM
 		// logical instructions with immediate values
 		eInstruction_andi,
 		eInstruction_andis,
-		eInstruction_andiRC,
-		eInstruction_andisRC,
+		eInstruction_andi_Dot,
+		eInstruction_andis_Dot,
 		eInstruction_ori,
 		eInstruction_oris,
 		eInstruction_xori,
@@ -337,89 +337,89 @@ namespace PPC::Decoder::ASM
 		// logical instructions
 		InstructionGroup_Bitshift_Start,
 		eInstruction_and = InstructionGroup_Bitshift_Start,
-		eInstruction_andRC,
+		eInstruction_and_Dot,
 		eInstruction_or,
-		eInstruction_orRC,
+		eInstruction_or_Dot,
 		eInstruction_xor,
-		eInstruction_xorRC,
+		eInstruction_xor_Dot,
 		eInstruction_nand,
-		eInstruction_nandRC,
+		eInstruction_nand_Dot,
 		eInstruction_nor,
-		eInstruction_norRC,
+		eInstruction_nor_Dot,
 		eInstruction_eqv,
-		eInstruction_eqvRC,
+		eInstruction_eqv_Dot,
 		eInstruction_andc,
-		eInstruction_andcRC,
+		eInstruction_andc_Dot,
 		eInstruction_orc,
-		eInstruction_orcRC,
-		InstructionGroup_Bitshift_End = eInstruction_orcRC,
+		eInstruction_orc_Dot,
+		InstructionGroup_Bitshift_End = eInstruction_orc_Dot,
 
 		// byte extend
 		eInstruction_extsb,
-		eInstruction_extsbRC,
+		eInstruction_extsb_Dot,
 		eInstruction_extsh,
-		eInstruction_extshRC,
+		eInstruction_extsh_Dot,
 		eInstruction_extsw,
-		eInstruction_extswRC,
+		eInstruction_extsw_Dot,
 		eInstruction_extrwi,
 
 		// population count
 		eInstruction_popcntb,
 		eInstruction_cntlzw,
-		eInstruction_cntlzwRC,
+		eInstruction_cntlzw_Dot,
 		eInstruction_cntlzd,
-		eInstruction_cntlzdRC,
+		eInstruction_cntlzd_Dot,
 
 		// Shift instructions with immediate params -->
 		// REG,REG,IMM,IMM
 		eInstruction_rldicl,
-		eInstruction_rldiclRC,
+		eInstruction_rldicl_Dot,
 		eInstruction_rldicr,
-		eInstruction_rldicrRC,
+		eInstruction_rldicr_Dot,
 		eInstruction_rldic,
-		eInstruction_rldicRC,
+		eInstruction_rldic_Dot,
 		eInstruction_rldimi,
-		eInstruction_rldimiRC,
+		eInstruction_rldimi_Dot,
 		eInstruction_clrlwi,
 		eInstruction_clrrwi,
 		eInstruction_clrlslwi,
 
 		// REG,REG,IMM,IMM,IMM
 		eInstruction_rlwinm,
-		eInstruction_rlwinmRC,
+		eInstruction_rlwinm_Dot,
 		eInstruction_rlwimi,
-		eInstruction_rlwimiRC,
+		eInstruction_rlwimi_Dot,
 
 		// REG,REG,REG,IMM
 		eInstruction_rldcl,
-		eInstruction_rldclRC,
+		eInstruction_rldcl_Dot,
 		eInstruction_rldcr,
-		eInstruction_rldcrRC,
+		eInstruction_rldcr_Dot,
 
 		// REG,REG,REG,IMM,IMM
 		eInstruction_rlwnm,
-		eInstruction_rlwnmRC,
+		eInstruction_rlwnm_Dot,
 
 		// Extended shifts
 		eInstruction_sld,
-		eInstruction_sldRC,
+		eInstruction_sld_Dot,
 		eInstruction_slw,
-		eInstruction_slwRC,
+		eInstruction_slw_Dot,
 		eInstruction_srd,
-		eInstruction_srdRC,
+		eInstruction_srd_Dot,
 		eInstruction_srw,
 		eInstruction_srwi,
-		eInstruction_srwRC,
+		eInstruction_srw_Dot,
 		eInstruction_srad,
-		eInstruction_sradRC,
+		eInstruction_srad_Dot,
 		eInstruction_sraw,
-		eInstruction_srawRC,
+		eInstruction_sraw_Dot,
 
 		// Extended shifts with immediate... geez..
 		eInstruction_srawi,
-		eInstruction_srawiRC,
+		eInstruction_srawi_Dot,
 		eInstruction_sradi,
-		eInstruction_sradiRC,
+		eInstruction_sradi_Dot,
 
 		// Cache operation instructions
 		eInstruction_dcbi,
@@ -457,87 +457,87 @@ namespace PPC::Decoder::ASM
 
 		// Floating point move and single op instructions
 		eInstruction_fmr,
-		eInstruction_fmrRC,
+		eInstruction_fmr_Dot,
 		eInstruction_fneg,
-		eInstruction_fnegRC,
+		eInstruction_fneg_Dot,
 		eInstruction_fabs,
-		eInstruction_fabsRC,
+		eInstruction_fabs_Dot,
 		eInstruction_fnabs,
-		eInstruction_fnabsRC,
+		eInstruction_fnabs_Dot,
 
 		// Floating point arithmetic instructions
 		eInstruction_fadd,
-		eInstruction_faddRC,
+		eInstruction_fadd_Dot,
 		eInstruction_fadds,
-		eInstruction_faddsRC,
+		eInstruction_fadds_Dot,
 		eInstruction_fsub,
-		eInstruction_fsubRC,
+		eInstruction_fsub_Dot,
 		eInstruction_fsubs,
-		eInstruction_fsubsRC,
+		eInstruction_fsubs_Dot,
 		eInstruction_fmul,
-		eInstruction_fmulRC,
+		eInstruction_fmul_Dot,
 		eInstruction_fmuls,
-		eInstruction_fmulsRC,
+		eInstruction_fmuls_Dot,
 		eInstruction_fdiv,
-		eInstruction_fdivRC,
+		eInstruction_fdiv_Dot,
 		eInstruction_fdivs,
-		eInstruction_fdivsRC,
+		eInstruction_fdivs_Dot,
 		eInstruction_fsqrt,
-		eInstruction_fsqrtRC,
+		eInstruction_fsqrt_Dot,
 		eInstruction_frsqrtx,
-		eInstruction_frsqrtxRC,
+		eInstruction_frsqrtx_Dot,
 		eInstruction_frsqrte,
 		eInstruction_fre,
-		eInstruction_freRC,
+		eInstruction_fre_Dot,
 
 		// Floating point mad instructions
 		eInstruction_fmadd,
-		eInstruction_fmaddRC,
+		eInstruction_fmadd_Dot,
 		eInstruction_fmadds,
-		eInstruction_fmaddsRC,
+		eInstruction_fmadds_Dot,
 		eInstruction_fmsub,
-		eInstruction_fmsubRC,
+		eInstruction_fmsub_Dot,
 		eInstruction_fmsubs,
-		eInstruction_fmsubsRC,
+		eInstruction_fmsubs_Dot,
 		eInstruction_fnmadd,
-		eInstruction_fnmaddRC,
+		eInstruction_fnmadd_Dot,
 		eInstruction_fnmadds,
-		eInstruction_fnmaddsRC,
+		eInstruction_fnmadds_Dot,
 		eInstruction_fnmsub,
-		eInstruction_fnmsubRC,
+		eInstruction_fnmsub_Dot,
 		eInstruction_fnmsubs,
-		eInstruction_fnmsubsRC,
+		eInstruction_fnmsubs_Dot,
 
 		// Floating point rounding and conversion
 		eInstruction_frsp,
-		eInstruction_frspRC,
+		eInstruction_frsp_Dot,
 		eInstruction_fctid,
-		eInstruction_fctidRC,
+		eInstruction_fctid_Dot,
 		eInstruction_fctidz,
-		eInstruction_fctidzRC,
+		eInstruction_fctidz_Dot,
 		eInstruction_fctiw,
-		eInstruction_fctiwRC,
+		eInstruction_fctiw_Dot,
 		eInstruction_fctiwz,
-		eInstruction_fctiwzRC,
+		eInstruction_fctiwz_Dot,
 		eInstruction_fcfid,
-		eInstruction_fcfidRC,
+		eInstruction_fcfid_Dot,
 
 		// Floating point select
 		eInstruction_fsel,
-		eInstruction_fselRC,
+		eInstruction_fsel_Dot,
 
 		// Floating point control registers
 		eInstruction_mffs,
-		eInstruction_mffsRC,
+		eInstruction_mffs_Dot,
 		eInstruction_mcrfs,
 		eInstruction_mtfsfi,
-		eInstruction_mtfsfiRC,
+		eInstruction_mtfsfi_Dot,
 		eInstruction_mtfsf,
-		eInstruction_mtfsfRC,
+		eInstruction_mtfsf_Dot,
 		eInstruction_mtfsb0,
-		eInstruction_mtfsb0RC,
+		eInstruction_mtfsb0_Dot,
 		eInstruction_mtfsb1,
-		eInstruction_mtfsb1RC,
+		eInstruction_mtfsb1_Dot,
 		eInstruction_mtlr,
 
 		// VMX instructions
@@ -599,31 +599,31 @@ namespace PPC::Decoder::ASM
 		eInstruction_vcfsx,	//+
 		eInstruction_vcfux,	//+
 		eInstruction_vcmpbfp,
-		eInstruction_vcmpbfpRC,
+		eInstruction_vcmpbfp_Dot,
 		eInstruction_vcmpeqfp,
-		eInstruction_vcmpeqfpRC,
+		eInstruction_vcmpeqfp_Dot,
 		eInstruction_vcmpequb,
-		eInstruction_vcmpequbRC,
+		eInstruction_vcmpequb_Dot,
 		eInstruction_vcmpequh,
-		eInstruction_vcmpequhRC,
+		eInstruction_vcmpequh_Dot,
 		eInstruction_vcmpequw,
-		eInstruction_vcmpequwRC,
+		eInstruction_vcmpequw_Dot,
 		eInstruction_vcmpgefp,
-		eInstruction_vcmpgefpRC,
+		eInstruction_vcmpgefp_Dot,
 		eInstruction_vcmpgtfp,
-		eInstruction_vcmpgtfpRC,
+		eInstruction_vcmpgtfp_Dot,
 		eInstruction_vcmpgtsb,
-		eInstruction_vcmpgtsbRC,
+		eInstruction_vcmpgtsb_Dot,
 		eInstruction_vcmpgtsh,
-		eInstruction_vcmpgtshRC,
+		eInstruction_vcmpgtsh_Dot,
 		eInstruction_vcmpgtsw,
-		eInstruction_vcmpgtswRC,
+		eInstruction_vcmpgtsw_Dot,
 		eInstruction_vcmpgtub,
-		eInstruction_vcmpgtubRC,
+		eInstruction_vcmpgtub_Dot,
 		eInstruction_vcmpgtuh,
-		eInstruction_vcmpgtuhRC,
+		eInstruction_vcmpgtuh_Dot,
 		eInstruction_vcmpgtuw,
-		eInstruction_vcmpgtuwRC,
+		eInstruction_vcmpgtuw_Dot,
 		eInstruction_vexptefp,	//+
 		eInstruction_vlogefp,		//+
 		eInstruction_vmaddcfp128,
@@ -852,8 +852,8 @@ namespace PPC::Decoder::ASM
 		// lwarx/stwcx
 		"lwarx",
 		"ldarx",
-		"stwcxRC", //.
-		"stdcxRC", //.
+		"stwcx.", //.
+		"stdcx.", //.
 
 		// memory bariers
 		"isync",
@@ -891,7 +891,7 @@ namespace PPC::Decoder::ASM
 
 		// math with immediate value
 		"addic",
-		"addicRC",
+		"addic.",
 		"addi",
 		"addis",
 		"subfic",
@@ -899,124 +899,124 @@ namespace PPC::Decoder::ASM
 
 		// add XO-form
 		"add",
-		"addRC",
+		"add.",
 		"addo",
-		"addoRC",
+		"addo.",
 
 		// subtract grom XO-form
 		"subi",
 		"subic",
 		"subf",
-		"subfRC",
+		"subf.",
 		"subfo",
-		"subfoRC",
+		"subfo.",
 
 		// add carrying XO-form
 		"addc",
-		"addcRC",
+		"addc.",
 		"addco",
-		"addcoRC",
+		"addco.",
 
 		// subtract From carrying XO-form
 		"subfc",
-		"subfcRC",
+		"subfc.",
 		"subfco",
-		"subfcoRC",
+		"subfco.",
 
 		// add extended XO-form
 		"adde",
-		"addeRC",
+		"adde.",
 		"addeo",
-		"addeoRC",
+		"addeo.",
 
 		// subtract from extended XO-form
 		"subfe",
-		"subfeRC",
+		"subfe.",
 		"subfeo",
-		"subfeoRC",
+		"subfeo.",
 		"subis",
 
 		// add to minus one extended XO-form
 		"addme",
-		"addmeRC",
+		"addme.",
 		"addmeo",
-		"addmeoRC",
+		"addmeo.",
 
 		// subtract from minus one extended XO-form
 		"subfme",
-		"subfmeRC",
+		"subfme.",
 		"subfmeo",
-		"subfmeoRC",
+		"subfmeo.",
 
 		// add to zero extended XO-form
 		"addze",
-		"addzeRC",
+		"addze.",
 		"addzeo",
-		"addzeoRC",
+		"addzeo.",
 
 		// subtract from zero extended XO-form
 		"subfze",
-		"subfzeRC",
+		"subfze.",
 		"subfzeo",
-		"subfzeoRC",
+		"subfzeo.",
 
 		// negate
 		"neg",
-		"negRC",
+		"neg.",
 		"nego",
-		"negoRC",
+		"nego.",
 
 		// multiply low doubleword XO-form
 		"mulld",
-		"mulldRC",
+		"mulld.",
 		"mulldo",
-		"mulldoRC",
+		"mulldo.",
 
 		// multiply low word XO-form
 		"mullw",
-		"mullwRC",
+		"mullw.",
 		"mullwo",
-		"mullwoRC",
+		"mullwo.",
 
 		// multiply high doubleword XO-form
 		"mullhd",
-		"mullhdRC",
+		"mullhd.",
 
 		// multiply High Word XO-form
 		"mullhw",
-		"mullhwRC",
+		"mullhw.",
 
 		// multiply high doubleword unsigned XO-form
 		"mulhdu",
-		"mulhduRC",
+		"mulhdu.",
 
 		// multiply High Word Unsigned XO-form
 		"mulhwu",
-		"mulhwuRC",
+		"mulhwu.",
 
 		// divide doubleword XO-form
 		"divd",
-		"divdRC",
+		"divd.",
 		"divdo",
-		"divdoRC",
+		"divdo.",
 
 		// divide word XO-form
 		"divw",
-		"divwRC",
+		"divw.",
 		"divwo",
-		"divwoRC",
+		"divwo.",
 
 		// divide doubleword unsigned XO-form
 		"divdu",
-		"divduRC",
+		"divdu.",
 		"divduo",
-		"divduoRC",
+		"divduo.",
 
 		// divide word unsigned XO-form
 		"divwu",
-		"divwuRC",
+		"divwu.",
 		"divwuo",
-		"divwuoRC",
+		"divwuo.",
 
 		// compare
 		"cmpwi",
@@ -1031,8 +1031,8 @@ namespace PPC::Decoder::ASM
 		// logical instructions with immediate values
 		"andi",
 		"andis",
-		"andiRC",
-		"andisRC",
+		"andi.",
+		"andis.",
 		"ori",
 		"oris",
 		"xori",
@@ -1040,88 +1040,88 @@ namespace PPC::Decoder::ASM
 
 		// logical instructions
 		"and",
-		"andRC",
+		"and.",
 		"or",
-		"orRC",
+		"or.",
 		"xor",
-		"xorRC",
+		"xor.",
 		"nand",
-		"nandRC",
+		"nand.",
 		"nor",
-		"norRC",
+		"nor.",
 		"eqv",
-		"eqvRC",
+		"eqv.",
 		"andc",
-		"andcRC",
+		"andc.",
 		"orc",
-		"orcRC",
+		"orc.",
 
 		// byte extend
 		"extsb",
-		"extsbRC",
+		"extsb.",
 		"extsh",
-		"extshRC",
+		"extsh.",
 		"extsw",
-		"extswRC",
+		"extsw.",
 		"extrwi",
 
 		// population count
 		"popcntb",
 		"cntlzw",
-		"cntlzwRC",
+		"cntlzw.",
 		"cntlzd",
-		"cntlzdRC",
+		"cntlzd.",
 
 		// Shift instructions with immediate params -->
 		// REG",REG",IMM",IMM
 		"rldicl",
-		"rldiclRC",
+		"rldicl.",
 		"rldicr",
-		"rldicrRC",
+		"rldicr.",
 		"rldic",
-		"rldicRC",
+		"rldic.",
 		"rldimi",
-		"rldimiRC",
+		"rldimi.",
 		"clrlwi",
 		"clrrwi",
 		"clrlslwi",
 
 		// REG",REG",IMM",IMM",IMM
 		"rlwinm",
-		"rlwinmRC",
+		"rlwinm.",
 		"rlwimi",
-		"rlwimiRC",
+		"rlwimi.",
 
 		// REG",REG",REG",IMM
 		"rldcl",
-		"rldclRC",
+		"rldcl.",
 		"rldcr",
-		"rldcrRC",
+		"rldcr.",
 
 		// REG",REG",REG",IMM",IMM
 		"rlwnm",
-		"rlwnmRC",
+		"rlwnm.",
 
 		// Extended shifts
 		"sld",
-		"sldRC",
+		"sld.",
 		"slw",
-		"slwRC",
+		"slw.",
 		"srd",
-		"srdRC",
+		"srd.",
 		"srw",
 		"srwi",
-		"srwRC",
+		"srw.",
 		"srad",
-		"sradRC",
+		"srad.",
 		"sraw",
-		"srawRC",
+		"sraw.",
 
 		// Extended shifts with immediate... geez..
 		"srawi",
-		"srawiRC",
+		"srawi.",
 		"sradi",
-		"sradiRC",
+		"sradi.",
 
 		// Cache operation instructions
 		"dcbi",
@@ -1159,87 +1159,87 @@ namespace PPC::Decoder::ASM
 
 		// Floating point move and single op instructions
 		"fmr",
-		"fmrRC",
+		"fmr.",
 		"fneg",
-		"fnegRC",
+		"fneg.",
 		"fabs",
-		"fabsRC",
+		"fabs.",
 		"fnabs",
-		"fnabsRC",
+		"fnabs.",
 
 		// Floating point arithmetic instructions
 		"fadd",
-		"faddRC",
+		"fadd.",
 		"fadds",
-		"faddsRC",
+		"fadds.",
 		"fsub",
-		"fsubRC",
+		"fsub.",
 		"fsubs",
-		"fsubsRC",
+		"fsubs.",
 		"fmul",
-		"fmulRC",
+		"fmul.",
 		"fmuls",
-		"fmulsRC",
+		"fmuls.",
 		"fdiv",
-		"fdivRC",
+		"fdiv.",
 		"fdivs",
-		"fdivsRC",
+		"fdivs.",
 		"fsqrt",
-		"fsqrtRC",
+		"fsqrt.",
 		"frsqrtx",
-		"frsqrtxRC",
+		"frsqrtx.",
 		"frsqrte",
 		"fre",
-		"freRC",
+		"fre.",
 
 		// Floating point mad instructions
 		"fmadd",
-		"fmaddRC",
+		"fmadd.",
 		"fmadds",
-		"fmaddsRC",
+		"fmadds.",
 		"fmsub",
-		"fmsubRC",
+		"fmsub.",
 		"fmsubs",
-		"fmsubsRC",
+		"fmsubs.",
 		"fnmadd",
-		"fnmaddRC",
+		"fnmadd.",
 		"fnmadds",
-		"fnmaddsRC",
+		"fnmadds.",
 		"fnmsub",
-		"fnmsubRC",
+		"fnmsub.",
 		"fnmsubs",
-		"fnmsubsRC",
+		"fnmsubs.",
 
 		// Floating point rounding and conversion
 		"frsp",
-		"frspRC",
+		"frsp.",
 		"fctid",
-		"fctidRC",
+		"fctid.",
 		"fctidz",
-		"fctidzRC",
+		"fctidz.",
 		"fctiw",
-		"fctiwRC",
+		"fctiw.",
 		"fctiwz",
-		"fctiwzRC",
+		"fctiwz.",
 		"fcfid",
-		"fcfidRC",
+		"fcfid.",
 
 		// Floating point select
 		"fsel",
-		"fselRC",
+		"fsel.",
 
 		// Floating point control registers
 		"mffs",
-		"mffsRC",
+		"mffs.",
 		"mcrfs",
 		"mtfsfi",
-		"mtfsfiRC",
+		"mtfsfi.",
 		"mtfsf",
-		"mtfsfRC",
+		"mtfsf.",
 		"mtfsb0",
-		"mtfsb0RC",
+		"mtfsb0.",
 		"mtfsb1",
-		"mtfsb1RC",
+		"mtfsb1.",
 		"mtlr",
 
 		// VMX instructions
@@ -1301,31 +1301,31 @@ namespace PPC::Decoder::ASM
 		"vcfsx",	//+
 		"vcfux",	//+
 		"vcmpbfp",
-		"vcmpbfpRC",
+		"vcmpbfp.",
 		"vcmpeqfp",
-		"vcmpeqfpRC",
+		"vcmpeqfp.",
 		"vcmpequb",
-		"vcmpequbRC",
+		"vcmpequb.",
 		"vcmpequh",
-		"vcmpequhRC",
+		"vcmpequh.",
 		"vcmpequw",
-		"vcmpequwRC",
+		"vcmpequw.",
 		"vcmpgefp",
-		"vcmpgefpRC",
+		"vcmpgefp.",
 		"vcmpgtfp",
-		"vcmpgtfpRC",
+		"vcmpgtfp.",
 		"vcmpgtsb",
-		"vcmpgtsbRC",
+		"vcmpgtsb.",
 		"vcmpgtsh",
-		"vcmpgtshRC",
+		"vcmpgtsh.",
 		"vcmpgtsw",
-		"vcmpgtswRC",
+		"vcmpgtsw.",
 		"vcmpgtub",
-		"vcmpgtubRC",
+		"vcmpgtub.",
 		"vcmpgtuh",
-		"vcmpgtuhRC",
+		"vcmpgtuh.",
 		"vcmpgtuw",
-		"vcmpgtuwRC",
+		"vcmpgtuw.",
 		"vexptefp",	//+
 		"vlogefp",		//+
 		"vmaddcfp128",
