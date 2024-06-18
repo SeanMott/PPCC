@@ -83,7 +83,7 @@ startproject "PCASMToCpp\"\n\n"""
     premakeStr = PremakeGen_ConfigureOptions_Default(premakeStr)
     premakeStr = PremakeGen_OutputDirFormat_Default(premakeStr)
     premakeStr = PremakeGen_AddPremakeInclude(premakeStr, BTDSTDDir + "/ProjectDeps.lua")
-    premakeStr = PremakeGen_ProjectStart(premakeStr, "PowerPCOperandDecoder", "PowerPCOperandDecoder", ProjectKind.StaticLib)
+    premakeStr = PremakeGen_ProjectStart_Location(premakeStr, "PowerPCOperandDecoder", "PowerPCOperandDecoder", ProjectKind.StaticLib)
     PremakeGen_ObjectAndTargetDirFormat_Default(premakeStr)
 
     premakeStr = premakeStr + """files 
@@ -97,7 +97,7 @@ startproject "PCASMToCpp\"\n\n"""
     includedirs
     {
         "PowerPCOperandDecoder/includes",
-        BTDSTD_DIR_INCLUDE_PATH
+        BTDSTD_INCLUDE_DIR_PATH
     }
     
     links
@@ -171,7 +171,7 @@ project "PowerPCParser"
     {
         "PowerPCParser/includes",
         "PowerPCOperandDecoder/includes",
-        BTDSTD_DIR_INCLUDE_PATH 
+        BTDSTD_INCLUDE_DIR_PATH 
     }
     
     links
@@ -248,7 +248,7 @@ project "PowerPCParser"
 
         "PowerPCOperandDecoder/includes",
         "PowerPCParser/includes",
-        BTDSTD_DIR_INCLUDE_PATH 
+        BTDSTD_INCLUDE_DIR_PATH
     }
     
     links
@@ -323,7 +323,7 @@ project "PPC_StaticRecompLayer"
     {
         "PPC_StaticRecompLayer/includes",
         "PowerPCOperandDecoder/includes",
-        BTDSTD_DIR_INCLUDE_PATH
+        BTDSTD_INCLUDE_DIR_PATH
     }
     
     links
@@ -400,7 +400,7 @@ includedirs
 
     "PowerPCOperandDecoder/includes",
     "PowerPCParser/includes",
-    BTDSTD_DIR_INCLUDE_PATH
+    BTDSTD_INCLUDE_DIR_PATH
 }
 
 links
@@ -454,7 +454,9 @@ filter "configurations:Dist"
 
     """
 
-    f = open("../Premake5.lua", "w")
+    #gets directory and writes Premake
+    d = os.path.dirname(os.path.realpath(__file__))
+    f = open(d + "/../Premake5.lua", "w")
     f.write(premakeStr)
     f.close()
 

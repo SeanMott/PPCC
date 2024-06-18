@@ -179,6 +179,7 @@ def BTDInstallerMode_NewInstall():
     print("\n\n" + Fore.CYAN + "Generating Project Dependicy list for projects to use the found dependices...")
 
     projectDepStr = "BTDSTD_DIR_PATH = \"" + installDir + "/BTDSTD\"\n"
+    projectDepStr = projectDepStr + "BTDSTD_INCLUDE_DIR_PATH = \"" + installDir + "/BTDSTD/includes\"\n"
     projectDepStr = projectDepStr + "BTDSTD_DEP_DIR_PATH = \"" + BTDSTD_Dep_Dir + "\"\n"
     projectDepStr = projectDepStr + "GLFW_DIR_PATH = \"" + GLFWDir + "\"\n"
     projectDepStr = projectDepStr + "GLM_DIR_PATH = \"" + GLMDir + "\"\n"
@@ -186,7 +187,8 @@ def BTDInstallerMode_NewInstall():
     projectDepStr = projectDepStr + "ASSIMP_DIR_PATH = \"" + AssimpDir + "\"\n"
     projectDepStr = projectDepStr + "IMGUI_DIR_PATH = \"" + ImGUIDir + "\"\n"
     projectDepStr = projectDepStr + "VULKAN_DIR_PATH = \"" + vulkanSDK + "\"\n"
-    
+    projectDepStr = projectDepStr + "include \"" + installDir + "/BTDSTD\"\n"
+
     f = open(installDir + "/BTDSTD/ProjectDeps.lua", "w")
     f.write(projectDepStr)
     f.close()

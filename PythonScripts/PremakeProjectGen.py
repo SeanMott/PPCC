@@ -51,7 +51,7 @@ def PremakeGen_ProjectStart(projectStr, projectName, projectKind, language = "C+
     return projectStr + "language \"" + language + "\"\n"
 
 #sets the project name, location type, and language
-def PremakeGen_ProjectStart(projectStr, projectName, location, projectKind, language = "C++"):
+def PremakeGen_ProjectStart_Location(projectStr, projectName, location, projectKind, language = "C++"):
     projectStr = projectStr + "\nproject \"" + projectName + "\"\n"
     projectStr = projectStr + "\nlocation \"" + location + "\"\n"
 

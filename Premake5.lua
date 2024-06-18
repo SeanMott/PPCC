@@ -41,7 +41,7 @@ files
     includedirs
     {
         "PowerPCOperandDecoder/includes",
-        BTDSTD_DIR_INCLUDE_PATH
+        BTDSTD_INCLUDE_DIR_PATH
     }
     
     links
@@ -115,7 +115,7 @@ project "PowerPCParser"
     {
         "PowerPCParser/includes",
         "PowerPCOperandDecoder/includes",
-        BTDSTD_DIR_INCLUDE_PATH 
+        BTDSTD_INCLUDE_DIR_PATH 
     }
     
     links
@@ -192,7 +192,7 @@ project "PowerPCParser"
 
         "PowerPCOperandDecoder/includes",
         "PowerPCParser/includes",
-        BTDSTD_DIR_INCLUDE_PATH 
+        BTDSTD_INCLUDE_DIR_PATH
     }
     
     links
@@ -267,7 +267,7 @@ project "PPC_StaticRecompLayer"
     {
         "PPC_StaticRecompLayer/includes",
         "PowerPCOperandDecoder/includes",
-        BTDSTD_DIR_INCLUDE_PATH
+        BTDSTD_INCLUDE_DIR_PATH
     }
     
     links
@@ -344,7 +344,7 @@ includedirs
 
     "PowerPCOperandDecoder/includes",
     "PowerPCParser/includes",
-    BTDSTD_DIR_INCLUDE_PATH
+    BTDSTD_INCLUDE_DIR_PATH
 }
 
 links
