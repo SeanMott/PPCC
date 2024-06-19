@@ -5,3 +5,6 @@
 /bin
 /PowerPCOperandDecoder/obj
 /PowerPCOperandDecoder/bin
+*.sln
+*.vcxproj
+*.pyc
