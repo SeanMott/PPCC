@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCASMToCpp", "PCC\PCASMToCpp.vcxproj", "{3FD930A1-2B91-72EE-9498-4B4A806F0DDF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BTDSTD", "C:\GameDev\BTDSTD\BTDSTD.vcxproj", "{8A3EEAA7-76E0-147E-5F9B-28D24BDC9BCE}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "C:\GameDev\BTDSTD-Deps\glfw\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCASM_StructRename", "PCASM_StructRename\PCASM_StructRename.vcxproj", "{9568D4E0-814C-9536-EAAC-8F89D6AF7FB8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PPC_StaticRecompLayer", "PPC_StaticRecompLayer\PPC_StaticRecompLayer.vcxproj", "{72811119-DEED-CC13-A7E1-6471130DEF7B}"
@@ -14,8 +10,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PowerPCOperandDecoder", "PowerPCOperandDecoder\PowerPCOperandDecoder.vcxproj", "{C4AE4F48-301B-0B43-F90E-A3A0653A2DAB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PowerPCParser", "PowerPCParser\PowerPCParser.vcxproj", "{1282AAA5-7E42-26DC-477D-6F59B3FC6AB8}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yaml-cpp", "C:\GameDev\BTDSTD-Deps\yaml-cpp\yaml-cpp.vcxproj", "{88F1A057-74BE-FB62-9DD7-E90A890331F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,18 +24,6 @@ Global
 		{3FD930A1-2B91-72EE-9498-4B4A806F0DDF}.Dist|x64.Build.0 = Dist|x64
 		{3FD930A1-2B91-72EE-9498-4B4A806F0DDF}.Release|x64.ActiveCfg = Release|x64
 		{3FD930A1-2B91-72EE-9498-4B4A806F0DDF}.Release|x64.Build.0 = Release|x64
-		{8A3EEAA7-76E0-147E-5F9B-28D24BDC9BCE}.Debug|x64.ActiveCfg = Debug|x64
-		{8A3EEAA7-76E0-147E-5F9B-28D24BDC9BCE}.Debug|x64.Build.0 = Debug|x64
-		{8A3EEAA7-76E0-147E-5F9B-28D24BDC9BCE}.Dist|x64.ActiveCfg = Dist|x64
-		{8A3EEAA7-76E0-147E-5F9B-28D24BDC9BCE}.Dist|x64.Build.0 = Dist|x64
-		{8A3EEAA7-76E0-147E-5F9B-28D24BDC9BCE}.Release|x64.ActiveCfg = Release|x64
-		{8A3EEAA7-76E0-147E-5F9B-28D24BDC9BCE}.Release|x64.Build.0 = Release|x64
-		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.ActiveCfg = Debug|x64
-		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.Build.0 = Debug|x64
-		{154B857C-0182-860D-AA6E-6C109684020F}.Dist|x64.ActiveCfg = Dist|x64
-		{154B857C-0182-860D-AA6E-6C109684020F}.Dist|x64.Build.0 = Dist|x64
-		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.ActiveCfg = Release|x64
-		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.Build.0 = Release|x64
 		{9568D4E0-814C-9536-EAAC-8F89D6AF7FB8}.Debug|x64.ActiveCfg = Debug|x64
 		{9568D4E0-814C-9536-EAAC-8F89D6AF7FB8}.Debug|x64.Build.0 = Debug|x64
 		{9568D4E0-814C-9536-EAAC-8F89D6AF7FB8}.Dist|x64.ActiveCfg = Dist|x64
@@ -66,12 +48,6 @@ Global
 		{1282AAA5-7E42-26DC-477D-6F59B3FC6AB8}.Dist|x64.Build.0 = Dist|x64
 		{1282AAA5-7E42-26DC-477D-6F59B3FC6AB8}.Release|x64.ActiveCfg = Release|x64
 		{1282AAA5-7E42-26DC-477D-6F59B3FC6AB8}.Release|x64.Build.0 = Release|x64
-		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Debug|x64.ActiveCfg = Debug|x64
-		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Debug|x64.Build.0 = Debug|x64
-		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Dist|x64.ActiveCfg = Dist|x64
-		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Dist|x64.Build.0 = Dist|x64
-		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Release|x64.ActiveCfg = Release|x64
-		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
