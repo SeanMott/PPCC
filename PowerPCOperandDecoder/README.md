@@ -1,0 +1,1 @@
+Decoder for GC and Wii Power PC Opcodes, based on the X360 transcompiler work
