@@ -37,10 +37,10 @@ static inline void ConvertASMToCpp(const std::string& filepath, const std::strin
 	firstPassASTTree.clear();
 	//PrintAndDump_SecondPassASMAST(secondPassASTTree, dumpFileDir, filename);
 
-	//Step 4: First Pass of the C++ code gen
-	std::vector<PPC::Backend::CppCodeGen::CodeGenNode> firstPassCppCodeGen = PPC::Backend::CppCodeGen::RunCodeGen(secondPassASTTree, filename);
+	//Step 4: First Pass of the C++ code gen into translation units
+	PPC::Backend::CppCodeGen::CppTranslationUnits translationUnits = PPC::Backend::CppCodeGen::RunCodeGen(secondPassASTTree, filename);
 	secondPassASTTree.clear();
-	PPC::Backend::CppCodeGen::PrintAndDump_CppCodeGen(firstPassCppCodeGen, dumpFileDir, filename);
+	PPC::Backend::CppCodeGen::PrintAndDump_CppCodeGen(translationUnits, dumpFileDir, filename);
 }
 
 //entry point

@@ -14,6 +14,7 @@ namespace PPC::Backend::CppCodeGen
 		GenaricCodeLine, //defines a genaric line of code
 
 		FunctionPrototype, //the prototype of a function
+		FunctionImpl, //the implementation of a function
 
 		Operator_SemiColon,	 //operator ;
 		Operator_Colon,	 //operator :
@@ -113,6 +114,11 @@ namespace PPC::Backend::CppCodeGen
 			{
 				//function prototype
 			case CodeGenNodeType::FunctionPrototype:
+				str = "void " + functionMetadata.funcName + "();";
+				break;
+
+				//function implementation
+			case CodeGenNodeType::FunctionImpl:
 				str = "void " + functionMetadata.funcName + "()";
 				break;
 
@@ -157,17 +163,22 @@ namespace PPC::Backend::CppCodeGen
 		}
 	};
 
+	//stores two code gen nodes, one is for the header, one is for the source
+	struct CppTranslationUnits
+	{
+		std::vector<CodeGenNode> header, source;
+	};
+
 	//generates code gen nodes from fine-grain AST
-	std::vector<CodeGenNode> RunCodeGen(const std::vector<PPC::AST::SecondPass::ASTSecondPass_Node>& secondPassASTTree, const std::string& filename);
+	CppTranslationUnits RunCodeGen(const std::vector<PPC::AST::SecondPass::ASTSecondPass_Node>& secondPassASTTree, const std::string& filename);
 
 	//prints the C++ code gen first pass and dumps the data to a file
-	static inline void PrintAndDump_CppCodeGen(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>& firstPassCppCodeGen, const std::string& dumpDir, const std::string& fileName)
+	static inline void PrintAndDump_CppCodeGen(PPC::Backend::CppCodeGen::CppTranslationUnits& translationUnits, const std::string& dumpDir, const std::string& fileName)
 	{
+		//prints to console and generates code
 		std::string dumpText = "";
-
-		//prints to console
-		for (uint32 i = 0; i < firstPassCppCodeGen.size(); ++i)
-			dumpText += firstPassCppCodeGen[i].Print();
+		for (uint32 i = 0; i < translationUnits.source.size(); ++i)
+			dumpText += translationUnits.source[i].Print();
 
 		//dumps into cpp file
 		std::string filepath = dumpDir + "\\CppCodeGenDump_" + fileName + ".cpp";
@@ -175,9 +186,15 @@ namespace PPC::Backend::CppCodeGen
 		file.WriteText(dumpText);
 		file.Close();
 
+		//prints to console and generates code
+		dumpText = "";
+		for (uint32 i = 0; i < translationUnits.header.size(); ++i)
+			dumpText += translationUnits.header[i].Print();
+
 		//dumps into header file
 		filepath = dumpDir + "\\CppCodeGenDump_" + fileName + ".hpp";
 		file.Open(filepath.c_str(), BTD::IO::FileOP::TextWrite_OpenCreateStart);
+		file.WriteText(dumpText);
 		file.Close();
 	}
 

@@ -1416,51 +1416,37 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		break;
 
 	}
-
-	//Code Gen
-	//bool cCodeGenerated = CodeGen_ProcessASMInstruction_Jump(codeGenTree, ASMInstruction);
-	//if (!cCodeGenerated)
-	//	cCodeGenerated = CodeGen_ProcessASMInstruction_Store(codeGenTree, ASMInstruction);
-	//if (!cCodeGenerated)
-	//	cCodeGenerated = CodeGen_ProcessASMInstruction_Move(codeGenTree, ASMInstruction);
-	//if (!cCodeGenerated)
-	//	cCodeGenerated = CodeGen_ProcessASMInstruction_Load(codeGenTree, ASMInstruction);
-	//if (!cCodeGenerated)
-	//	cCodeGenerated = CodeGen_ProcessASMInstruction_Math(codeGenTree, ASMInstruction);
-	//if (!cCodeGenerated)
-	//	cCodeGenerated = CodeGen_ProcessASMInstruction_Compare(codeGenTree, ASMInstruction);
-	//if (!cCodeGenerated)
-	//	cCodeGenerated = CodeGen_ProcessASMInstruction_Bitshift(codeGenTree, ASMInstruction);
-
-	//process ASM instructions into comment
-	//if (!cCodeGenerated)
-	//	codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));
 }
 
 //processes a function into a series of nodes
-static inline void CodeGen_ProcessFunctionASTNode(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
+static inline void CodeGen_ProcessFunctionASTNode(PPC::Backend::CppCodeGen::CppTranslationUnits* codeGenTrees,
 	const PPC::AST::SecondPass::ASTSecondPass_Node* secondPassASTTree, uint32& ASTTreeIndex, const size_t& ASTTreeLength)
 {
 	//generate the prototype
 	PPC::Backend::CppCodeGen::CodeGenNode node;
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::FunctionPrototype;
 	node.functionMetadata.funcName = secondPassASTTree[ASTTreeIndex].functionMetaData.funcName;
-	codeGenTree->emplace_back(node);
+	codeGenTrees->header.emplace_back(node);
+
+	//generates the implementation
+	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::FunctionImpl;
+	node.functionMetadata.funcName = secondPassASTTree[ASTTreeIndex].functionMetaData.funcName;
+	codeGenTrees->source.emplace_back(node);
 
 	//adds {
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Operator_Curly_Bracket_Open;
 	node.generalStrData = "{";
-	codeGenTree->emplace_back(node);
+	codeGenTrees->source.emplace_back(node);
 
 	//adds a "GameCube::GameCubeRegisters ctx;" context for registers
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::GenaricCodeLine;
 	node.generalStrData = "\tGameCube::GameCubeRegisters ctx;\n";
-	codeGenTree->emplace_back(node);
+	codeGenTrees->source.emplace_back(node);
 
 	//processes ASM Instructions
 	size_t instructionCount = secondPassASTTree[ASTTreeIndex].functionMetaData.instructions.size();
 	for (uint32 i = 0; i < instructionCount; ++i)
-		CodeGen_ProcessASMInstructionASTNode(codeGenTree, i,
+		CodeGen_ProcessASMInstructionASTNode(&codeGenTrees->source, i,
 			&secondPassASTTree[ASTTreeIndex].functionMetaData.instructions[i],
 			(i + 1 < instructionCount ? &secondPassASTTree[ASTTreeIndex].functionMetaData.instructions[i + 1] : nullptr));
 
@@ -1471,12 +1457,12 @@ static inline void CodeGen_ProcessFunctionASTNode(std::vector<PPC::Backend::CppC
 		const PPC::AST::SecondPass::ASTSecondPass_Node_JumpLabel jumpLabel = secondPassASTTree[ASTTreeIndex].functionMetaData.jumpLabels[i];
 		node.generalStrData = jumpLabel.labelName;
 		node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::JumpLabel;
-		codeGenTree->emplace_back(node);
+		codeGenTrees->source.emplace_back(node);
 
 		//process the label's instructions
 		instructionCount = jumpLabel.instructions.size();
 		for (uint32 t = 0; t < instructionCount; ++t)
-			CodeGen_ProcessASMInstructionASTNode(codeGenTree, i,
+			CodeGen_ProcessASMInstructionASTNode(&codeGenTrees->source, i,
 				&jumpLabel.instructions[t],
 				(t + 1 < instructionCount ? &jumpLabel.instructions[t + 1] : nullptr));
 	}
@@ -1484,11 +1470,11 @@ static inline void CodeGen_ProcessFunctionASTNode(std::vector<PPC::Backend::CppC
 	//adds }
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Operator_Curly_Bracket_Closed;
 	node.generalStrData = "}";
-	codeGenTree->emplace_back(node);
+	codeGenTrees->source.emplace_back(node);
 }
 
 //processes a object into a series of nodes
-static inline void CodeGen_ProcessObjectASTNode(std::vector<PPC::Backend::CppCodeGen::CodeGenNode>* codeGenTree,
+static inline void CodeGen_ProcessObjectASTNode(PPC::Backend::CppCodeGen::CppTranslationUnits* codeGenTrees,
 	const PPC::AST::SecondPass::ASTSecondPass_Node* secondPassASTTree, uint32& ASTTreeIndex, const size_t& ASTTreeLength)
 {
 	PPC::AST::SecondPass::ASTSecondPass_Node secondASTNode = secondPassASTTree[ASTTreeIndex];
@@ -1497,12 +1483,12 @@ static inline void CodeGen_ProcessObjectASTNode(std::vector<PPC::Backend::CppCod
 	PPC::Backend::CppCodeGen::CodeGenNode node;
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::ObjectPrototype;
 	node.objectMetadata.objName = secondASTNode.objMetaData.objName;
-	codeGenTree->emplace_back(node);
+	codeGenTrees->header.emplace_back(node);
 
 	//adds {
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Operator_Curly_Bracket_Open;
 	node.generalStrData = "{";
-	codeGenTree->emplace_back(node);
+	codeGenTrees->header.emplace_back(node);
 
 	//processes variables
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::Keyword_ControlFlow;
@@ -1547,41 +1533,50 @@ static inline void CodeGen_ProcessObjectASTNode(std::vector<PPC::Backend::CppCod
 		node.generalStrData += secondASTNode.objMetaData.variables[i].tokens[1].data + ";";
 
 		//adds the node
-		codeGenTree->emplace_back(node);
+		codeGenTrees->header.emplace_back(node);
 	}
 
 	//adds }
 	node.type = PPC::Backend::CppCodeGen::CodeGenNodeType::ObjectEnd;
 	node.generalStrData = "}";
-	codeGenTree->emplace_back(node);
+	codeGenTrees->header.emplace_back(node);
 }
 
 //generates C++ code bits from fine-grain AST
-std::vector<PPC::Backend::CppCodeGen::CodeGenNode> PPC::Backend::CppCodeGen::RunCodeGen(const std::vector<PPC::AST::SecondPass::ASTSecondPass_Node>& secondPassASTTree,
+PPC::Backend::CppCodeGen::CppTranslationUnits PPC::Backend::CppCodeGen::RunCodeGen(const std::vector<PPC::AST::SecondPass::ASTSecondPass_Node>& secondPassASTTree,
 	const std::string& filename)
 {
-	std::vector<PPC::Backend::CppCodeGen::CodeGenNode> codeGenTree;
-	const size_t ASTTreeLength = secondPassASTTree.size();
-	codeGenTree.reserve(ASTTreeLength + 1);
+	PPC::Backend::CppCodeGen::CppTranslationUnits codeGenTrees;
 
-	//adds includes at the top of the file
+	const size_t ASTTreeLength = secondPassASTTree.size();
+	codeGenTrees.header.reserve(ASTTreeLength + 1);
+	codeGenTrees.source.reserve(ASTTreeLength + 1);
+
+	//adds includes at the top of the header file
 	PPC::Backend::CppCodeGen::CodeGenNode includeGen;
+	includeGen.generalStrData = "#ifndef CppCodeGenDump_" + filename + "_HPP\n#define CppCodeGenDump_" + filename + "_HPP\n"; //include gaurd start
+	codeGenTrees.header.emplace_back(includeGen);
+
+	//adds includes at the top of the source file
 	includeGen.generalStrData = "#include \"includes/PPC/StaticRecompile/Macros.h\"\n#include \"includes/GameCubeRegisters.h\""; //static recomp includes
 	includeGen.generalStrData += "\n#include \"CppCodeGenDump_" + filename + ".hpp\""; //header file of this file
 	includeGen.generalStrData += "\n#include <iostream>\n\n"; //standard lib Cout	
-	codeGenTree.emplace_back(includeGen);
+	codeGenTrees.source.emplace_back(includeGen);
 
 	//goes through the AST tree
 	for (uint32 i = 0; i < ASTTreeLength; ++i)
 	{
 		//processes a function
 		if (secondPassASTTree[i].type == PPC::AST::SecondPass::ASTSecondPass_NodeType::Function)
-			CodeGen_ProcessFunctionASTNode(&codeGenTree, secondPassASTTree.data(), i, ASTTreeLength);
+			CodeGen_ProcessFunctionASTNode(&codeGenTrees, secondPassASTTree.data(), i, ASTTreeLength);
 
 		//processes a object
 		else if (secondPassASTTree[i].type == PPC::AST::SecondPass::ASTSecondPass_NodeType::Object)
-			CodeGen_ProcessObjectASTNode(&codeGenTree, secondPassASTTree.data(), i, ASTTreeLength);
+			CodeGen_ProcessObjectASTNode(&codeGenTrees, secondPassASTTree.data(), i, ASTTreeLength);
 	}
 
-	return codeGenTree;
+	includeGen.generalStrData = "\n\n#endif"; //include gaurd end
+	codeGenTrees.header.emplace_back(includeGen);
+
+	return codeGenTrees;
 }
