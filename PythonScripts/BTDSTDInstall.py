@@ -30,56 +30,8 @@ HOST_OS_OPTIONS = ["Windows"] #, "Mac (Intel)", "Mac (M series)", "Linux"]
 #defines the build target platform options
 TARGET_PLATFORM_OPTIONS = ["Windows", "Mac (Intel)", "Mac (M series)", "Linux", "Android", "ISO", "Web", "VR", "AR"]
 
-#if the user wishes to make a new instalation of the BTDSTD
-def BTDInstallerMode_NewInstall():
-    print("Great, let me just just get some intel.")
-
-    HostOS = inquirer.list_input("What OS is this machine?", choices=HOST_OS_OPTIONS)
-
-    #targetOSes = inquirer.list_input("What platforms are you targeting?", choices=TARGET_PLATFORM_OPTIONS)
-
-    #isPreferedDepDir = inquirer.list_input("Is there a directory you like to keep all your C++ libraries in?", choices=["yes", "no"])
-    #get prfered directory
-
-    #if no prefered directory, where would you like the BTDSTD directory
-    installDir = inquirer.prompt([inquirer.Path('installDir',
-                 message="Where would you like the BTDSTD installed? (a / must be at the end of your path)",
-                 path_type=inquirer.Path.DIRECTORY)])['installDir']
-    #correct any back slashes
-    installDir = BTDIO_FixBackSlashes(installDir)
-
-    #would you like the docs?
-
-    #would you like samples using it?
-
-    #start install and set up
-    print(Fore.CYAN + "---STARTING BTDSTD INSTALL---")
-    
-    #prompts for Vulkan SDK
-    vulkanSDK = BTDDep_Vulkan_PromptForVulkan()
-    if(vulkanSDK == "Nevermind Ray"):
-        return
-
-    #validates Vulkan
-    print(Fore.MAGENTA + "\nValidating Deps...")
-    vulkanSDK = BTDDep_Validate_Vulkan(vulkanSDK)
-    if(vulkanSDK == ""):
-        print(Fore.RED + "Aborting due to missing Vulkan SDK!")
-        return
-
-    #gets BTDSTD, clears old one if exists
-    print("\n\n" + Fore.MAGENTA + "Getting BTDSTD from Github....")
-    BTDGit_DeleteFolderAndGitClone(installDir, "BTDSTD", BTDSTD_GIT_REPO_URL)
-    
-    print("\n\n" + Fore.MAGENTA + "Getting BTDSTD Deps from Github....")
-    BTDGit_DeleteFolderAndGitClone(installDir, "BTDSTD-Deps", BTDSTD_DEPS_GIT_REPO_URL)
-    BTDSTD_Dep_Dir = installDir + "/BTDSTD-Deps"
-    GLFWDir = BTDDep_Validate(BTDSTD_Dep_Dir, "glfw", "GLFW")
-    GLMDir = BTDDep_Validate(BTDSTD_Dep_Dir, "glm", "GLM")
-    YamlCppDir = BTDDep_Validate(BTDSTD_Dep_Dir, "yaml-cpp", "YAML Cpp")
-    AssimpDir = BTDDep_Validate(BTDSTD_Dep_Dir, "Assimp_DLLs_Libs", "Assimp")
-    ImGUIDir = BTDDep_Validate(BTDSTD_Dep_Dir, "imgui", "ImGUI")
-    
+#generates a premake file for BTDSTD
+def BTDInstaller_Util_GenerateBTDSTDPremakeFile(installDir, YamlCppDir, GLFWDir, GLMDir, ImGUIDir, vulkanSDK, AssimpDir):
     print("\n\n" + Fore.CYAN + "Ajusting BTDSTD to use the found dependices...")
     BTDSTDPremakeFileStr = ""
     BTDSTDPremakeFileStr = PremakeGen_ConfigureOptions_Default(BTDSTDPremakeFileStr)
@@ -161,8 +113,8 @@ def BTDInstallerMode_NewInstall():
     f.write(BTDSTDPremakeFileStr)
     f.close()
 
-    print("\n\n" + Fore.GREEN + "BTDSTD is ready to go!")
-
+#generates a deps lua file for BTDSTD projects
+def BTDInstaller_Util_GenerateBTDSTD_ProjectDeps(installDir, BTDSTD_Dep_Dir, YamlCppDir, GLFWDir, GLMDir, ImGUIDir, vulkanSDK, AssimpDir):
     print("\n\n" + Fore.CYAN + "Generating Project Dependicy list for projects to use the found dependices...")
 
     projectDepStr = "BTDSTD_DIR_PATH = \"" + installDir + "/BTDSTD\"\n"
@@ -179,6 +131,64 @@ def BTDInstallerMode_NewInstall():
     f = open(installDir + "/BTDSTD/ProjectDeps.lua", "w")
     f.write(projectDepStr)
     f.close()
+
+#if the user wishes to make a new instalation of the BTDSTD
+def BTDInstallerMode_NewInstall():
+    print("Great, let me just just get some intel.")
+
+    HostOS = inquirer.list_input("What OS is this machine?", choices=HOST_OS_OPTIONS)
+
+    #targetOSes = inquirer.list_input("What platforms are you targeting?", choices=TARGET_PLATFORM_OPTIONS)
+
+    #isPreferedDepDir = inquirer.list_input("Is there a directory you like to keep all your C++ libraries in?", choices=["yes", "no"])
+    #get prfered directory
+
+    #if no prefered directory, where would you like the BTDSTD directory
+    installDir = inquirer.prompt([inquirer.Path('installDir',
+                 message="Where would you like the BTDSTD installed? (a / must be at the end of your path)",
+                 path_type=inquirer.Path.DIRECTORY)])['installDir']
+    #correct any back slashes
+    installDir = BTDIO_FixBackSlashes(installDir)
+
+    #would you like the docs?
+
+    #would you like samples using it?
+
+    #start install and set up
+    print(Fore.CYAN + "---STARTING BTDSTD INSTALL---")
+    
+    #prompts for Vulkan SDK
+    vulkanSDK = BTDDep_Vulkan_PromptForVulkan()
+    if(vulkanSDK == "Nevermind Ray"):
+        return
+
+    #validates Vulkan
+    print(Fore.MAGENTA + "\nValidating Deps...")
+    vulkanSDK = BTDDep_Validate_Vulkan(vulkanSDK)
+    if(vulkanSDK == ""):
+        print(Fore.RED + "Aborting due to missing Vulkan SDK!")
+        return
+
+    #gets BTDSTD, clears old one if exists
+    print("\n\n" + Fore.MAGENTA + "Getting BTDSTD from Github....")
+    BTDGit_DeleteFolderAndGitClone(installDir, "BTDSTD", BTDSTD_GIT_REPO_URL)
+    
+    print("\n\n" + Fore.MAGENTA + "Getting BTDSTD Deps from Github....")
+    BTDGit_DeleteFolderAndGitClone(installDir, "BTDSTD-Deps", BTDSTD_DEPS_GIT_REPO_URL)
+    BTDSTD_Dep_Dir = installDir + "/BTDSTD-Deps"
+    GLFWDir = BTDDep_Validate(BTDSTD_Dep_Dir, "glfw", "GLFW")
+    GLMDir = BTDDep_Validate(BTDSTD_Dep_Dir, "glm", "GLM")
+    YamlCppDir = BTDDep_Validate(BTDSTD_Dep_Dir, "yaml-cpp", "YAML Cpp")
+    AssimpDir = BTDDep_Validate(BTDSTD_Dep_Dir, "Assimp_DLLs_Libs", "Assimp")
+    ImGUIDir = BTDDep_Validate(BTDSTD_Dep_Dir, "imgui", "ImGUI")
+    
+    #generates BTDSTD premake file
+    BTDInstaller_Util_GenerateBTDSTDPremakeFile(installDir, YamlCppDir, GLFWDir, GLMDir, ImGUIDir, vulkanSDK, AssimpDir)
+    
+    print("\n\n" + Fore.GREEN + "BTDSTD is ready to go!")
+
+    #generates a BTDSTD project dep lua file
+    BTDInstaller_Util_GenerateBTDSTD_ProjectDeps(installDir, BTDSTD_Dep_Dir, YamlCppDir, GLFWDir, GLMDir, ImGUIDir, vulkanSDK, AssimpDir)
 
     print("\n\n" + Fore.GREEN + "Everything is ready, happy programming! :3")
 
