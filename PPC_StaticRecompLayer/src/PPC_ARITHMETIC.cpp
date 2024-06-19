@@ -7,8 +7,8 @@ namespace PPC {
         namespace ASM {
 
             // Emulates the add instruction
-            void ADD(uint32_t* registers, uint32_t rD, uint32_t rA, uint32_t rB) {
-                registers[rD] = registers[rA] + registers[rB];
+            void ADD(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA, uint32_t rB) {
+                ctx.GPR.GPR[rD] = ctx.GPR.GPR[rA] + ctx.GPR.GPR[rB];
             }
 
             // Emulates the addi instruction (Add Immediate)
@@ -21,95 +21,95 @@ namespace PPC {
             }
 
             // Emulates the addic instruction
-            void ADDIC(uint32_t* registers, uint32_t rD, uint32_t rA, int32_t SIMM) {
-                uint64_t result = (uint64_t)registers[rA] + SIMM;
-                registers[rD] = (uint32_t)result;
+            void ADDIC(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA, int32_t SIMM) {
+                uint64_t result = (uint64_t)ctx.GPR.GPR[rA] + SIMM;
+                ctx.GPR.GPR[rD] = (uint32_t)result;
             }
 
             // Emulates the addic. instruction (sets condition register CR0)
-            void ADDIC_DOT(uint32_t* registers, uint32_t rD, uint32_t rA, int32_t SIMM, uint32_t* CR0) {
-                uint64_t result = (uint64_t)registers[rA] + SIMM;
-                registers[rD] = (uint32_t)result;
-                *CR0 = (result >> 32) ? 1 : 0; // Set carry bit in CR0
+            void ADDIC_DOT(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA, int32_t SIMM) {
+                uint64_t result = (uint64_t)ctx.GPR.GPR[rA] + SIMM;
+                ctx.GPR.GPR[rD] = (uint32_t)result;
+                ctx.CR.CR = (result >> 32) ? 1 : 0; // Set carry bit in CR0
             }
 
             // Emulates the addis instruction
-            void ADDIS(uint32_t* registers, uint32_t rD, uint32_t rA, int32_t SIMM) {
-                registers[rD] = registers[rA] + (SIMM << 16);
+            void ADDIS(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA, int32_t SIMM) {
+                ctx.GPR.GPR[rD] = ctx.GPR.GPR[rA] + (SIMM << 16);
             }
 
             // Emulates the addme instruction
-            void ADDME(uint32_t* registers, uint32_t rD, uint32_t rA) {
-                uint64_t result = (uint64_t)registers[rA] + 0xFFFFFFFF;
-                registers[rD] = (uint32_t)result + 1; // Increment result
+            void ADDME(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = (uint64_t)ctx.GPR.GPR[rA] + 0xFFFFFFFF;
+                ctx.GPR.GPR[rD] = (uint32_t)result + 1; // Increment result
             }
 
             // Emulates the addme. instruction (sets condition register CR0)
-            void ADDME_DOT(uint32_t* registers, uint32_t rD, uint32_t rA, uint32_t* CR0) {
-                uint64_t result = (uint64_t)registers[rA] + 0xFFFFFFFF;
-                registers[rD] = (uint32_t)result + 1; // Increment result
-                *CR0 = (result >> 32) ? 1 : 0; // Set carry bit in CR0
+            void ADDME_DOT(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = (uint64_t)ctx.GPR.GPR[rA] + 0xFFFFFFFF;
+                ctx.GPR.GPR[rD] = (uint32_t)result + 1; // Increment result
+                ctx.CR.CR = (result >> 32) ? 1 : 0; // Set carry bit in CR0
             }
 
             // Emulates the addze instruction
-            void ADDZE(uint32_t* registers, uint32_t rD, uint32_t rA) {
-                uint64_t result = (uint64_t)registers[rA];
-                registers[rD] = (uint32_t)result + 1; // Increment result
+            void ADDZE(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = (uint64_t)ctx.GPR.GPR[rA];
+                ctx.GPR.GPR[rD] = (uint32_t)result + 1; // Increment result
             }
 
             // Emulates the addze. instruction (sets condition register CR0)
-            void ADDZE_DOT(uint32_t* registers, uint32_t rD, uint32_t rA, uint32_t* CR0) {
-                uint64_t result = (uint64_t)registers[rA];
-                registers[rD] = (uint32_t)result + 1; // Increment result
-                *CR0 = (result >> 32) ? 1 : 0; // Set carry bit in CR0
+            void ADDZE_DOT(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = (uint64_t)ctx.GPR.GPR[rA];
+                ctx.GPR.GPR[rD] = (uint32_t)result + 1; // Increment result
+                ctx.CR.CR = (result >> 32) ? 1 : 0; // Set carry bit in CR0
             }
 
             // Emulates the subf instruction
-            void SUBF(uint32_t* registers, uint32_t rD, uint32_t rA, uint32_t rB) {
-                registers[rD] = registers[rB] - registers[rA];
+            void SUBF(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA, uint32_t rB) {
+                ctx.GPR.GPR[rD] = ctx.GPR.GPR[rB] - ctx.GPR.GPR[rA];
             }
 
             // Emulates the subfic instruction
-            void SUBFIC(uint32_t* registers, uint32_t rD, uint32_t rA, int32_t SIMM) {
-                registers[rD] = SIMM - registers[rA];
+            void SUBFIC(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA, int32_t SIMM) {
+                ctx.GPR.GPR[rD] = SIMM - ctx.GPR.GPR[rA];
             }
 
             // Emulates the subfme instruction
-            void SUBFME(uint32_t* registers, uint32_t rD, uint32_t rA) {
-                uint64_t result = ~registers[rA] + 1;
-                registers[rD] = (uint32_t)result - 1;
+            void SUBFME(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = ~ctx.GPR.GPR[rA] + 1;
+                ctx.GPR.GPR[rD] = (uint32_t)result - 1;
             }
 
             // Emulates the subfme. instruction (sets condition register CR0)
-            void SUBFME_DOT(uint32_t* registers, uint32_t rD, uint32_t rA, uint32_t* CR0) {
-                uint64_t result = ~registers[rA] + 1;
-                registers[rD] = (uint32_t)result - 1;
-                *CR0 = (result >> 32) ? 1 : 0; // Set carry bit in CR0
+            void SUBFME_DOT(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = ~ctx.GPR.GPR[rA] + 1;
+                ctx.GPR.GPR[rD] = (uint32_t)result - 1;
+                ctx.CR.CR = (result >> 32) ? 1 : 0; // Set carry bit in CR0
             }
 
             // Emulates the subfze instruction
-            void SUBFZE(uint32_t* registers, uint32_t rD, uint32_t rA) {
-                uint64_t result = ~registers[rA] + 1;
-                registers[rD] = (uint32_t)result;
+            void SUBFZE(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = ~ctx.GPR.GPR[rA] + 1;
+                ctx.GPR.GPR[rD] = (uint32_t)result;
             }
 
             // Emulates the subfze. instruction (sets condition register CR0)
-            void SUBFZE_DOT(uint32_t* registers, uint32_t rD, uint32_t rA, uint32_t* CR0) {
-                uint64_t result = ~registers[rA] + 1;
-                registers[rD] = (uint32_t)result;
-                *CR0 = (result >> 32) ? 1 : 0; // Set carry bit in CR0
+            void SUBFZE_DOT(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = ~ctx.GPR.GPR[rA] + 1;
+                ctx.GPR.GPR[rD] = (uint32_t)result;
+                ctx.CR.CR = (result >> 32) ? 1 : 0; // Set carry bit in CR0
             }
 
             // Emulates the neg instruction
-            void NEG(uint32_t* registers, uint32_t rD, uint32_t rA) {
-                registers[rD] = ~registers[rA] + 1;
+            void NEG(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                ctx.GPR.GPR[rD] = ~ctx.GPR.GPR[rA] + 1;
             }
 
             // Emulates the neg. instruction (sets condition register CR0)
-            void NEG_DOT(uint32_t* registers, uint32_t rD, uint32_t rA, uint32_t* CR0) {
-                uint64_t result = ~registers[rA] + 1;
-                registers[rD] = (uint32_t)result;
-                *CR0 = (result >> 32) ? 1 : 0; // Set carry bit in CR0
+            void NEG_DOT(GameCube::GameCubeRegisters& ctx, uint32_t rD, uint32_t rA) {
+                uint64_t result = ~ctx.GPR.GPR[rA] + 1;
+                ctx.GPR.GPR[rD] = (uint32_t)result;
+                ctx.CR.CR = (result >> 32) ? 1 : 0; // Set carry bit in CR0
             }
 
         } // namespace ASM
