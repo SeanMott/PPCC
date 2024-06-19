@@ -55,25 +55,12 @@ def BTDInstallerMode_NewInstall():
     #start install and set up
     print(Fore.CYAN + "---STARTING BTDSTD INSTALL---")
     
-    #prompt them to continue with the install
-    continueWithInstall_options = ["I have the Vulkan SDK Installed", "I do not, how do I get it?", "Nevermind Ray"]
-    continueWithInstall = inquirer.list_input("Do you have the Vulkan SDK Installed?",
-    choices=continueWithInstall_options)
-    if(continueWithInstall == continueWithInstall_options[2]): #if they wish to leave
-        print("Understood, have a nice day :3")
-        return
-
-    if(continueWithInstall == continueWithInstall_options[1]): #if they wish to know where to get it
-        print("\n\nBTDSTD requires Vulkan for Windows and Linux development. he minimum version required is " +
-        Fore.YELLOW + "1.3" + Fore.WHITE + ".")
-        print("Please go to " + Fore.CYAN + "https://vulkan.lunarg.com/sdk/home" + Fore.WHITE + " to get the latest SDK.")
-        print("Once the SDK is installed, run this again.")
+    #prompts for Vulkan SDK
+    vulkanSDK = BTDDep_Vulkan_PromptForVulkan()
+    if(vulkanSDK == "Nevermind Ray"):
         return
 
     #validates Vulkan
-    vulkanSDK = inquirer.prompt([inquirer.Path('VulkanSDK',
-                 message="Where is the Vulkan SDK located? (a / must be at the end of your path)",
-                 path_type=inquirer.Path.DIRECTORY)])['VulkanSDK']
     print(Fore.MAGENTA + "\nValidating Deps...")
     vulkanSDK = BTDDep_Validate_Vulkan(vulkanSDK)
     if(vulkanSDK == ""):
