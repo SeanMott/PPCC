@@ -323,11 +323,13 @@ project "PPC_StaticRecompLayer"
     {
         "PPC_StaticRecompLayer/includes",
         "PowerPCOperandDecoder/includes",
+        "PowerPCParser/includes",
         BTDSTD_INCLUDE_DIR_PATH
     }
     
     links
     {
+        "PowerPCParser",
        "PowerPCOperandDecoder",
        "BTDSTD"
     }

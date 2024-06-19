@@ -1,5 +1,7 @@
 #include <PowerPCParser/CppCodeGen/CppCodeGen.hpp>
 
+#include <PowerPCParser/CppMacroBlackMagic/Impls.hpp>
+
 //converts a ASM instruction into a comment
 static inline PPC::Backend::CppCodeGen::CodeGenNode CodeGen_ProcessASMInstructionIntoComment(const PPC::AST::SecondPass::ASTSecondPass_Node_ASMInstruction* ASMInstruction)
 {
@@ -26,17 +28,10 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 
 	switch (ASMInstruction->opcode.instruction)
 	{
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nop:
-		codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nop:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// move register (with move to/from special registers)
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mfspr:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::MFSPR(ctx.GPR.GPR, ctx.SPR.SPR, " + ASMInstruction->parameterTokens[0].data + ", ctx.SPR.SPR);"; //instruction to C++
@@ -45,75 +40,30 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsprg:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsprg:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr0:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr0:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr1:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfsrr1:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtspr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtspr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr0:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr0:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr1:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsrr1:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsprg:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtsprg:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsrg:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfmsrg:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtdar:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtdsisr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsrd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsree:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtxer:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtdar:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtdsisr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsrd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtmsree:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtxer:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mfcr:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::MFCR(ctx.GRP.GRP, ctx.CR" + ASMInstruction->parameterTokens[0].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
@@ -121,43 +71,18 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtcrf:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtcrf:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfocrf:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfocrf:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtocrf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mcrf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mftb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mflr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtocrf:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mcrf:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mftb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mflr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtctr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtctr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfdar:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfdar:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// load memory
 
@@ -193,22 +118,17 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lba:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lha:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwa:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lbau:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lhau:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwau:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ld:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ldu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lmw:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lba:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lha:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwa:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lbau:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lhau:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwau:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ld:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ldu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lmw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// load memory indexed
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzx:
@@ -219,8 +139,8 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_lbzux:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::LBZUX(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
 			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
@@ -229,16 +149,16 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lbax:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lhax:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwax:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lbaux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lhaux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwaux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ldx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ldux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lhzux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwzux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lbax:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lhax:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwax:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lbaux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lhaux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwaux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ldx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ldux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	
 		// store memory
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stb:
@@ -265,19 +185,9 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_std:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_std:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_slwi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_slwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stbu:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::STBU(ctx.GPR.GPR, ctx.memory, " + ASMInstruction->parameterTokens[0].data + ", " +
@@ -303,7 +213,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stdu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stdu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	// store memory indexed
 	case PPC::Decoder::ASM::EInstruction::eInstruction_stbx:
@@ -314,22 +224,22 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sthx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stwx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stdx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stbux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sthux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stwux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stdux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sthx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stwx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stdx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stbux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sthux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stwux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stdux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	//quantized store
-	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_stx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_lx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_st:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_l:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_stx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_lx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_st:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_psq_l:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		//idk
-	case PPC::Decoder::ASM::EInstruction::eInstruction_twui:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_twui:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// branch instructions
 	case PPC::Decoder::ASM::EInstruction::eInstruction_b:
@@ -339,12 +249,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bdnz:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bdnz:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_ba:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::BA(ctx.PC, " + ASMInstruction->parameterTokens[0].data + ");"; //C++ code
@@ -360,42 +265,22 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_blt:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_blt:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bla:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bcl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bca:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bcla:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bclr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bclrl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bcctr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bcctrl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_beq:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bla:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bc:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bcl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bca:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bcla:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bclr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bclrl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bcctr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bcctrl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_beq:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_beq_plus:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_beq_plus:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_beqlr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_beqlr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_blr:
 		codeGenNode.generalStrData = "\treturn;"; //C++ code
@@ -404,12 +289,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bltlr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bltlr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_bne:
 		codeGenNode.generalStrData = "\tif(PPC::StaticRecompile::ASM::BNE_If(ctx))"; //if check
@@ -421,42 +301,22 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bnelr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bnelr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bge:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bge:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bgelr:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bgelr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bgt:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bgt:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bctr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_bctrl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bctr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_bctrl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	 // lwarx/stwcx
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwarx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ldarx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stwcx_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break; //.
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stdcx_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break; //.
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwarx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ldarx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stwcx_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break; //.
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stdcx_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break; //.
 
 		// memory bariers
 	case PPC::Decoder::ASM::EInstruction::eInstruction_isync:
@@ -480,12 +340,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_ptesync:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_ptesync:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_eieio:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::EIEIO();"; //C++ code
@@ -496,26 +351,26 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 
 		// custom
 	//case PPC::Decoder::ASM::EInstruction::eInstruction_cmp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fcmpu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fcmpo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_twi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_tdi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_tw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_td:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fcmpu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fcmpo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_twi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_tdi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_tw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_td:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// generic instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sc:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// condition register operators
-	case PPC::Decoder::ASM::EInstruction::eInstruction_crand:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cror:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_crxor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_crnand:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_crnor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_creqv:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_crandc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_crorc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_crclr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_crand:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cror:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_crxor:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_crnand:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_crnor:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_creqv:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_crandc:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_crorc:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_crclr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// load immediate
 	case PPC::Decoder::ASM::EInstruction::eInstruction_li:
@@ -534,77 +389,36 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 
 		// math with immediate value
 	case PPC::Decoder::ASM::EInstruction::eInstruction_addic:
-		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADDIC(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
+		CPP_IMPL_CODE_GEN(PPC::StaticRecompile::ASM::CPP_FUNC_STR_ADDIC(ASMInstruction))
 		break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_addic_Dot:
-		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADDIC_DOT(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-			", " + ASMInstruction->parameterTokens[2].data + "ctx.CR);"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
+		CPP_IMPL_CODE_GEN(PPC::StaticRecompile::ASM::CPP_FUNC_STR_ADDIC_DOT(ASMInstruction))
 		break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_addi:
-		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADDI(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
+		CPP_IMPL_CODE_GEN(PPC::StaticRecompile::ASM::CPP_FUNC_STR_ADDI(ASMInstruction))
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addis:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfic:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulli:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addis:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfic:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulli:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// add XO-form
 	case PPC::Decoder::ASM::EInstruction::eInstruction_add:
-		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ADD(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
-			", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
+		CPP_IMPL_CODE_GEN(PPC::StaticRecompile::ASM::CPP_FUNC_STR_ADD(ASMInstruction))
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_add_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_add_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addo:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addo_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// subtract grom XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subic:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subic:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_subf:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::SUBF(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -614,116 +428,116 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subf_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subf_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// add carrying XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addc_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addco:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addco_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addc:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addc_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addco:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addco_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// subtract From carrying XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfc_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfco:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfco_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfc:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfc_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfco:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfco_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// add extended XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_adde:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_adde_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addeo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addeo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_adde:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_adde_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addeo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addeo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// subtract from extended XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfe:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfe_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfeo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfeo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subis:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfe:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfe_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfeo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfeo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subis:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// add to minus one extended XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addme:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addme_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addmeo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addmeo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addme:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addme_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addmeo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addmeo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// subtract from minus one extended XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfme:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfme_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfmeo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfmeo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfme:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfme_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfmeo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfmeo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// add to zero extended XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addze:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addze_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addzeo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_addzeo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addze:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addze_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addzeo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_addzeo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// subtract from zero extended XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfze:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfze_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfzeo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_subfzeo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfze:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfze_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfzeo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_subfzeo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// negate
-	case PPC::Decoder::ASM::EInstruction::eInstruction_neg:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_neg_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nego:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nego_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_neg:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_neg_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nego:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nego_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// multiply low doubleword XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulld:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulld_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulldo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulldo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulld:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulld_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulldo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulldo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// multiply low word XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullwo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullwo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullwo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullwo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// multiply high doubleword XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhd_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// multiply High Word XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mullhw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// multiply high doubleword unsigned XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhdu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhdu_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhdu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhdu_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// multiply High Word Unsigned XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhwu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhwu_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhwu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mulhwu_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// divide doubleword XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divdo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divdo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divd_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divdo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divdo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// divide word XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divwo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divwo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divwo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divwo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// divide doubleword unsigned XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divdu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divdu_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divduo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divduo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divdu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divdu_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divduo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divduo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// divide word unsigned XO-form
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divwu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divwu_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divwuo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_divwuo_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divwu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divwu_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divwuo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_divwuo_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// compare
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpwi:
@@ -733,7 +547,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpdi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpdi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmplwi:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::CMPLWI(ctx.GPR.GPR, &ctx.CR.CR, 0, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
@@ -741,9 +555,9 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpldi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpldi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_cmplw:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::CMPLW(ctx.GPR.GPR, &ctx.CR.CR, 0, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
@@ -751,22 +565,12 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpld:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cmpld:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	// logical instructions with immediate values
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andis:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andis:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_andi_Dot:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ANDI_DOT(ctx, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -825,12 +629,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_and_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_and_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_or:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::OR(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -840,12 +639,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_or_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_or_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_xor:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::XOR(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -855,12 +649,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_xor_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_xor_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_nand:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::NAND(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -870,12 +659,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nand_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nand_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_nor:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::NOR(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -885,12 +669,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_nor_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_nor_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_eqv:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::EQV(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -900,12 +679,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_eqv_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_eqv_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_andc:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ANDC(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -915,12 +689,7 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_andc_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_andc_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	case PPC::Decoder::ASM::EInstruction::eInstruction_orc:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::ORC(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " + ASMInstruction->parameterTokens[1].data +
@@ -930,91 +699,60 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_orc_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_orc_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	
 	// byte extend
-	case PPC::Decoder::ASM::EInstruction::eInstruction_extsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_extsb_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_extsh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_extsh_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_extsw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_extsw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_extrwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_extsb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_extsb_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_extsh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_extsh_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_extsw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_extsw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_extrwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// population count
-	case PPC::Decoder::ASM::EInstruction::eInstruction_popcntb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_popcntb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_cntlzd_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	// Shift instructions with immediate params -->
 	// REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicl_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicr_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldic:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldic_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicl_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldicr_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldic:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldic_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi_Dot:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldimi_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlwi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_clrrwi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
-
-	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlslwi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_clrrwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_clrlslwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwinm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwinm_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwimi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwimi_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwinm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwinm_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwimi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwimi_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcl_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcr_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcl_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rldcr_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;REG:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction));break;IMM
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwnm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwnm_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwnm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rlwnm_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Extended shifts
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sld:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sld_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sld:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sld_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_slw:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::SLW(ctx.GPR.GPR, " + ASMInstruction->parameterTokens[0].data + ", " +
 			ASMInstruction->parameterTokens[1].data + ", " + ASMInstruction->parameterTokens[2].data + ");"; //instruction to C++
@@ -1023,22 +761,22 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_slw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srwi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srad:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srad_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sraw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sraw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_slw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srd_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srad:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srad_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sraw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sraw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Extended shifts with immediate... geez..
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srawi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_srawi_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sradi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sradi_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srawi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_srawi_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sradi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sradi_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Cache operation instructions
 	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbi:
@@ -1062,124 +800,119 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbt:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbtst:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbz:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbt:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbtst:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_dcbz:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		//  Floating point load instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfsu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfsx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfsux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfdu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfdx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lfdux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfsu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfsx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfsux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfdu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfdx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lfdux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		//  Floating point store instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfsu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfsx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfsux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfdu:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfdx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfdux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfsu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfsx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfsux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfdu:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfdx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfdux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Store float point as integer word indexed
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stfiwx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stfiwx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		//store move register
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stmw:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION;"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stmw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Floating point move and single op instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmr_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fneg:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fneg_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fabs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fabs_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnabs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnabs_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmr_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fneg:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fneg_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fabs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fabs_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnabs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnabs_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Floating point arithmetic instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fadd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fadd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fadds:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fadds_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsub:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsub_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsubs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsubs_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmul:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmul_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmuls:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmuls_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fdiv:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fdiv_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fdivs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fdivs_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsqrt:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsqrt_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_frsqrtx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_frsqrtx_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_frsqrte:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fre:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fre_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fadd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fadd_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fadds:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fadds_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsub:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsub_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsubs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsubs_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmul:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmul_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmuls:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmuls_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fdiv:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fdiv_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fdivs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fdivs_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsqrt:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsqrt_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_frsqrtx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_frsqrtx_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_frsqrte:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fre:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fre_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Floating point mad instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadds:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadds_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsub:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsub_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsubs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsubs_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadd:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadd_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadds:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadds_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsub:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsub_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsubs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsubs_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadd_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadds:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmadds_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsub:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsub_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsubs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fmsubs_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadd:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadd_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadds:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmadds_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsub:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsub_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsubs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fnmsubs_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Floating point rounding and conversion
-	case PPC::Decoder::ASM::EInstruction::eInstruction_frsp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_frsp_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctid:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctid_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctidz:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctidz_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiwz:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiwz_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fcfid:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fcfid_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_frsp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_frsp_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctid:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctid_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctidz:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctidz_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiwz:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fctiwz_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fcfid:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fcfid_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Floating point select
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsel:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_fsel_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsel:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_fsel_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		// Floating point control registers
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mffs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mffs_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mcrfs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsfi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsfi_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsf:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsf_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb0:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb0_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb1:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb1_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mffs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mffs_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mcrfs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsfi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsfi_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsf:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsf_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb0:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb0_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb1:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtfsb1_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 	case PPC::Decoder::ASM::EInstruction::eInstruction_mtlr:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::MTLR(ctx, " + ASMInstruction->parameterTokens[0].data + ");"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
@@ -1188,138 +921,133 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		break;
 
 		// VMX instructions
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvebx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvehx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvewx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvlx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvlxl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvrx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvrxl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvsl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvsr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;			//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lvxl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mfvscr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_mtvscr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvebx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvehx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvewx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvlx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvlxl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvrx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvrxl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stvxl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lhbrx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lwbrx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_sthbrx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stwbrx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lswi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_lswx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stswi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_stswx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddcuw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddsbs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddshs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddsws:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddubm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddubs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduhm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduhs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduwm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduws:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vand:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vandc:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgsh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgsw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgub:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vavguh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vavguw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfpsxws:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfpuxws:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcsxwfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break; //+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcuxwfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break; //+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vctsxs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vctuxs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfsx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfux:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpbfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpbfp_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpeqfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpeqfp_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequb_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequh_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgefp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgefp_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtfp_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsb_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsh_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtub:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtub_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuh_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuw_Dot:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vexptefp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vlogefp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaddcfp128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaddfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxsh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxsw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxub:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxuh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxuw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vminfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vminsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vminsh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vminsw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vminub:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vminuh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vminuw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrghb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrghh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrghw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrglb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrglh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrglw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vdot3fp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vdot4fp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vmulfp128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vnmsubfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vnor:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION HAS NO C++ FUNCTION IMPL"; //C++ code
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvebx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvehx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvewx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvlx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvlxl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvrx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvrxl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvsl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvsr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;			//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lvxl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mfvscr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_mtvscr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvebx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvehx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvewx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvlx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvlxl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvrx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvrxl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stvxl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lhbrx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lwbrx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_sthbrx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stwbrx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lswi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_lswx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stswi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_stswx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddcuw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddsbs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddshs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddsws:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddubm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vaddubs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduhm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduhs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduwm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vadduws:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vand:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vandc:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgsb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgsh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgsw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vavgub:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vavguh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vavguw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfpsxws:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfpuxws:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcsxwfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break; //+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcuxwfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break; //+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vctsxs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vctuxs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfsx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcfux:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpbfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpbfp_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpeqfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpeqfp_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequb_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequh_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpequw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgefp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgefp_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtfp_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsb_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsh_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtsw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtub:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtub_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuh_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vcmpgtuw_Dot:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vexptefp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vlogefp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaddcfp128:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaddfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxsb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxsh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxsw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxub:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxuh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmaxuw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vminfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vminsb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vminsh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vminsw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vminub:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vminuh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vminuw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrghb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrghh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrghw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrglb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrglh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmrglw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vdot3fp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vdot4fp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vmulfp128:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vnmsubfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vnor:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 		
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;			//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vperm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpermwi128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkd3d128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkpx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkshss:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkshus:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkswss:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkswus:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuhum:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuhus:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuwum:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuwus:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrefp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vor:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;			//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vperm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpermwi128:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkd3d128:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkpx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkshss:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkshus:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkswss:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkswus:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuhum:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuhus:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuwum:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vpkuwus:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrefp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
 	case PPC::Decoder::ASM::EInstruction::eInstruction_rfi:
 		codeGenNode.generalStrData = "\tPPC::StaticRecompile::ASM::RFI(ctx.PC, ctx.MSR.MSR, ctx.SRR.SRR0, ctx.SRR.SRR1);"; //instruction to C++
 		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
@@ -1327,55 +1055,55 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfim:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfin:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfip:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfiz:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlimi128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vrsqrtefp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsel:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsl:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vslb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsldoi:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vslh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vslo:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vslw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsplth:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltisb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltish:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltisw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsr:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrab:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrah:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsraw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsro:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubcuw:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubfp:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubsbs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubshs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubsws:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsububm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsububs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuhm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuhs:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuwm:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuws:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkd3d128:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkhpx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkhsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkhsh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;	//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vupklpx:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vupklsb:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vupklsh:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
-	case PPC::Decoder::ASM::EInstruction::eInstruction_vxor:codeGenTree->emplace_back(CodeGen_ProcessASMInstructionIntoComment(ASMInstruction)); break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfim:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfin:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfip:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrfiz:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlimi128:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrlw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vrsqrtefp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;	//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsel:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsl:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vslb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsldoi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;		//+
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vslh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break; 
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vslo:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break; 
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vslw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break; 
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsplth:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltisb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltish:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltisw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vspltw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsr:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrab:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrah:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsraw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsro:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsrw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubcuw:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubfp:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubsbs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubshs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubsws:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsububm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsububs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuhm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuhs:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuwm:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vsubuws:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkd3d128:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkhpx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkhsb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vupkhsh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vupklpx:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vupklsb:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vupklsh:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_vxor:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 		//extra
 	case PPC::Decoder::ASM::EInstruction::eInstruction_icbi:
@@ -1386,19 +1114,9 @@ static inline void CodeGen_ProcessASMInstructionASTNode(std::vector<PPC::Backend
 		codeGenTree->emplace_back(codeGenNode);
 		break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rotlwi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rotlwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
-	case PPC::Decoder::ASM::EInstruction::eInstruction_rotrwi:
-		codeGenNode.generalStrData = "\t//THIS INSTRUCTION DOES NOT HAVE A C++ IMPLEMENTATION"; //instruction to C++
-		codeGenNode.generalStrData += std::string(" //") + CodeGen_ProcessASMInstructionIntoComment(ASMInstruction).generalStrData; //comment of old ASM
-		codeGenNode.generalStrData += "\n"; //adds extra space
-		codeGenTree->emplace_back(codeGenNode);
-		break;
+	case PPC::Decoder::ASM::EInstruction::eInstruction_rotrwi:CPP_IMPL_CODE_GEN(CPP_IMPL_NO_FUNC) break;
 
 	//catch all
 	case PPC::Decoder::ASM::EInstruction::eInstruction_MAX:
