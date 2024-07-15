@@ -1,3 +1,5 @@
+THIS VERSION IS NO LONGER BEING WORKED ON ALL WORK HAS BEEN MOVED TO [PPC](https://github.com/SeanMott/PPC).
+
 # Power PC (Game Cube) To C++
 A WIP GameCube Power PC to C++ static transcompiler.
 
